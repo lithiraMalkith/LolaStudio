@@ -1,0 +1,399 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>My Sanctuary | Lola Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        body {
+            background-color: #0D0D0D;
+            color: #e5e2dd;
+            -webkit-font-smoothing: antialiased;
+        }
+        .geist-mono { font-family: 'Geist Mono', monospace; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for the gallery-like feel */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0D0D0D; }
+        ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C9A84C; }
+        
+        .inner-glow {
+            box-shadow: inset 0 0 20px rgba(201, 168, 76, 0.05);
+        }
+        .border-gold-subtle {
+            border-color: rgba(201, 168, 76, 0.2);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#e5e2dd",
+                      "inverse-primary": "#755b00",
+                      "background": "#131411",
+                      "outline": "#99907e",
+                      "surface-dim": "#131411",
+                      "surface-container-high": "#2a2a27",
+                      "on-primary-fixed": "#241a00",
+                      "on-tertiary-fixed": "#1b1c1c",
+                      "on-tertiary": "#303030",
+                      "on-secondary-container": "#b7b4b4",
+                      "outline-variant": "#4d4637",
+                      "inverse-surface": "#e5e2dd",
+                      "surface-variant": "#353532",
+                      "primary-fixed-dim": "#e6c364",
+                      "on-tertiary-container": "#404040",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "on-error": "#690005",
+                      "surface-container": "#20201d",
+                      "tertiary-container": "#adabab",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "surface-container-low": "#1c1c19",
+                      "on-secondary": "#313030",
+                      "on-surface": "#e5e2dd",
+                      "secondary": "#c8c6c5",
+                      "on-tertiary-fixed-variant": "#474746",
+                      "error-container": "#93000a",
+                      "on-primary": "#3d2e00",
+                      "primary": "#e6c364",
+                      "primary-container": "#c9a84c",
+                      "surface-bright": "#3a3936",
+                      "on-primary-container": "#503d00",
+                      "on-primary-fixed-variant": "#584400",
+                      "secondary-container": "#474746",
+                      "error": "#ffb4ab",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-fixed": "#e4e2e1",
+                      "tertiary-fixed-dim": "#c8c6c5",
+                      "surface-tint": "#e6c364",
+                      "on-surface-variant": "#d0c5b2",
+                      "on-secondary-fixed-variant": "#474746",
+                      "surface-container-lowest": "#0e0e0c",
+                      "surface-container-highest": "#353532",
+                      "primary-fixed": "#ffe08f",
+                      "inverse-on-surface": "#31302d",
+                      "tertiary": "#c8c6c6",
+                      "secondary-fixed": "#e5e2e1",
+                      "surface": "#131411"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "xl": "80px",
+                      "md": "24px",
+                      "sm": "12px",
+                      "base": "8px",
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "lg": "48px"
+              },
+              "fontFamily": {
+                      "label-sm": ["DM Sans"],
+                      "caption": ["DM Sans"],
+                      "body-lg": ["DM Sans"],
+                      "display-lg": ["Playfair Display"],
+                      "headline-xl": ["Playfair Display"],
+                      "body-md": ["DM Sans"],
+                      "headline-xl-mobile": ["Playfair Display"],
+                      "headline-md": ["Playfair Display"],
+                      "display-lg-mobile": ["Playfair Display"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "caption": ["14px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-xl-mobile": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                      "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                      "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background selection:bg-primary selection:text-on-primary geist-mono">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-xl bg-surface dark:bg-surface-dim border-b border-outline-variant transition-all duration-500" id="top-bar">
+<button class="flex items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="geist-mono text-headline-md text-primary tracking-[0.4em] uppercase cursor-pointer">LOLA STUDIO</h1>
+<div class="flex items-center gap-md">
+<nav class="hidden md:flex gap-md font-label-sm text-label-sm uppercase tracking-widest">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Gallery</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Zen</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Curated</a>
+<a class="text-primary border-b border-primary" href="#">Account</a>
+</nav>
+<button class="flex items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</header>
+<main class="pt-xl min-h-screen">
+<!-- Hero Spiritual Minimalist Header -->
+<section class="w-full py-xl px-gutter flex flex-col items-center text-center">
+<div class="mb-sm opacity-60 font-label-sm text-label-sm tracking-[0.3em] uppercase geist-mono">Identity &amp; Collection</div>
+<h2 class="geist-mono text-headline-xl mb-md text-on-surface tracking-tight">My Sanctuary</h2>
+<div class="w-12 h-[1px] bg-primary-container mb-md"></div>
+<p class="geist-mono text-caption text-on-surface-variant max-w-xl opacity-80">
+                A personal space dedicated to your journey through handmade artisanal luxury and spiritual connection.
+            </p>
+</section>
+<!-- Main Dashboard Content -->
+<section class="max-w-container-max mx-auto px-gutter pb-xl grid grid-cols-1 md:grid-cols-12 gap-lg items-start">
+<!-- Left Column: Personal Identity -->
+<aside class="md:col-span-4 space-y-lg sticky top-32">
+<div class="bg-surface-container-low p-md border border-outline-variant inner-glow relative overflow-hidden group">
+<!-- Subtle background texture -->
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+</div>
+<div class="relative z-10">
+<div class="flex items-end justify-between mb-lg">
+<h3 class="geist-mono text-body-lg text-on-surface uppercase tracking-widest">Identity</h3>
+<span class="geist-mono text-[10px] text-primary opacity-50 uppercase tracking-tighter">Verified Member</span>
+</div>
+<div class="space-y-md">
+<div class="group/input">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-xs geist-mono">Soul Name</label>
+<div class="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+<span class="font-body-lg text-body-lg text-on-surface">Elena Vostrova</span>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" data-icon="edit">edit</span>
+</div>
+</div>
+<div class="group/input">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-xs geist-mono">Email Resonance</label>
+<div class="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+<span class="font-body-lg text-body-lg text-on-surface">elena.v@sanctuary.io</span>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" data-icon="lock">lock</span>
+</div>
+</div>
+<div class="group/input">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-xs geist-mono">Primary Sanctuary</label>
+<div class="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+<span class="font-body-lg text-body-lg text-on-surface">22 Baker St, London</span>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" data-icon="location_on">location_on</span>
+</div>
+</div>
+</div>
+<div class="mt-xl pt-md border-t border-outline-variant flex gap-sm">
+<button class="bg-primary text-on-primary px-md py-sm font-label-sm text-label-sm uppercase tracking-widest hover:brightness-110 transition-all flex-1">
+                                Save Changes
+                            </button>
+<button class="border border-primary text-primary px-md py-sm font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary/5 transition-all">
+                                Security
+                            </button>
+</div>
+</div>
+</div>
+<!-- Subtle Decorative Card -->
+<div class="bg-surface-container-lowest p-md border border-outline-variant relative overflow-hidden h-64 flex flex-col justify-end">
+<img alt="Sri Lankan Ceramic" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity" data-alt="A moody, close-up photograph of a handmade Sri Lankan ceramic vessel with intricate earthy textures and a subtle golden crackle glaze. The lighting is low-key and dramatic, casting long soft shadows across a dark slate surface. The atmosphere is quiet, artisanal, and premium, evoking a sense of ancient craftsmanship meeting modern luxury. The color palette is dominated by deep blacks, charcoal greys, and shimmering gold accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpvP3yWw5zmPKOCZFiSFu7pWEHW5il2vbYK7v1O6eHuFdkO00qFSWveZ-N3JBQbT3aaFI-z6EqDNdP9H9-PCpVc-_5vzW1Yau1dLf-nMzVibin_ZNOTvPM48M2a870XTlV7aT7SiViWZlRb2KYrN6tMwxJ5GMEOOLpHC8aIgUPAm39w8w3aNvCAZVLB9LGfVxyuasc4Kjq89PmV9GoVPkI3pt1Z5DDsrCSYC0iKgOqjSED-wGcChYx6stXZjIabrpzGnoCquTtXmSh">
+<div class="relative z-10 text-on-surface">
+<div class="geist-mono text-[10px] uppercase tracking-widest opacity-60 mb-xs">Spiritual Essence</div>
+<h4 class="font-headline-md text-headline-md italic">Curation Philosophy</h4>
+<p class="font-caption text-caption text-on-surface-variant mt-xs">Each piece in your collection is hand-carved in Sri Lanka.</p>
+</div>
+</div>
+</aside>
+<!-- Right Column: Curation History (Orders) -->
+<div class="md:col-span-8">
+<div class="flex items-center justify-between mb-lg">
+<div class="flex items-baseline gap-sm">
+<h3 class="geist-mono text-body-lg text-on-surface uppercase tracking-widest">Curation History</h3>
+<span class="geist-mono text-label-sm text-on-surface-variant opacity-40">(04)</span>
+</div>
+<button class="flex items-center gap-xs font-label-sm text-label-sm text-primary uppercase tracking-widest hover:underline underline-offset-8 transition-all">
+                        View All Collections <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Orders Table-like Grid -->
+<div class="space-y-sm">
+<!-- Item 1 -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col md:flex-row md:items-center p-md group hover:bg-surface-container-high transition-all duration-500">
+<div class="w-24 h-24 bg-background border border-outline-variant shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden">
+<img alt="Sacred Incense Holder" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-alt="A macro photograph of a dark, hand-forged bronze incense holder with delicate Sri Lankan floral patterns etched into the surface. A single wisp of smoke curls gracefully into the dark, shadowed background. The lighting highlights the warm, metallic gold undertones of the bronze against a charcoal grey setting. The overall mood is ethereal, meditative, and high-end artisanal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcvU0XhmPiP920hJj1UgvS0P-le8L67bo9ctbgpWLywQ6eMvai--_i8ulFjkXgZLExWI0XCIsjSqW2_YVH6dr7uvFRu-GX5MYqjXv1RPDvk9SLz6RkTt50d35zNYnpZ_LiDjFm75wCIexr-mADiQmDdb2nHv76joU4myk53XPA4SR3ZOXHtR3-JZWx6h9Ae1H4iuSOdpMVEd7Y3ieM4_lh_MsCYmovE5nggJSACUxITVO4TdWFgDwq0YSs-7qPJV7xMPZ0KAw2IRf9">
+</div>
+<div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-md md:items-center">
+<div class="col-span-2">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-primary mb-xs">Order #LOLA-8821</div>
+<h5 class="font-headline-md text-body-lg text-on-surface leading-tight">Sacred Basalt Incense Altar</h5>
+<p class="font-caption text-caption text-on-surface-variant">Arrived 12.04.24</p>
+</div>
+<div class="hidden md:block">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Status</div>
+<div class="flex items-center gap-xs font-label-sm text-label-sm text-on-surface">
+<span class="w-1 h-1 bg-primary rounded-full"></span> Manifested
+                                </div>
+</div>
+<div class="text-right">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Value</div>
+<div class="font-label-sm text-label-sm text-on-surface">$240.00</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col md:flex-row md:items-center p-md group hover:bg-surface-container-high transition-all duration-500">
+<div class="w-24 h-24 bg-background border border-outline-variant shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden">
+<img alt="Zen Statuette" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-alt="A focused image of a small, minimalist stone Buddha statuette carved from textured Sri Lankan river stone. The statue is placed on a dark wooden surface with soft backlighting that creates a serene halo effect. The colors are muted, featuring stone greys, deep blacks, and very soft amber light. The aesthetic is extremely minimalist and spiritual, reflecting high-quality handmade art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpZ2nWOs5CZTGVeqRhlOZ71efyzB-wZeJxhRXabVr5WKkRo2fezRc68aot-X1KCld3sWkFhj3qJtryiPcynCp0M4GAT8jwDXcw0JK5XXaOPEgCbPHZbA9yWuuPeAa1T_Vr6IvdrdfEig3Z04aRKv8IaEy4YE8K1RMU9gfOqzcH_wwPG1fbJXKO0sfwIMIyJh9yXxk8YvpTHdsIoM5vZmgf-sXILaJHSHPvMlmlZg3xvIrQ0_ov6pm0zMGX4jR3XMzpkkygddx1Db-E">
+</div>
+<div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-md md:items-center">
+<div class="col-span-2">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-primary mb-xs">Order #LOLA-8794</div>
+<h5 class="font-headline-md text-body-lg text-on-surface leading-tight">Hand-Carved Anura Statuette</h5>
+<p class="font-caption text-caption text-on-surface-variant">Arrived 05.03.24</p>
+</div>
+<div class="hidden md:block">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Status</div>
+<div class="flex items-center gap-xs font-label-sm text-label-sm text-on-surface">
+<span class="w-1 h-1 bg-primary rounded-full"></span> Manifested
+                                </div>
+</div>
+<div class="text-right">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Value</div>
+<div class="font-label-sm text-label-sm text-on-surface">$580.00</div>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col md:flex-row md:items-center p-md group hover:bg-surface-container-high transition-all duration-500">
+<div class="w-24 h-24 bg-background border border-outline-variant shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden">
+<img alt="Artisan Throws" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-alt="Detailed texture of a heavy, hand-loomed organic cotton throw in deep indigo and charcoal. The weave is loose and artisanal, showing the natural imperfections of the Sri Lankan fabric. The lighting is soft and directional, accentuating the tactile richness of the textile. Dark, moody atmosphere with a high-end luxury feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoqYarMLX0cqVwokgYB_T6vYWy8pflH9KUDqrdzrMBo2704ED5nqgUKO8P-5bOJZT4Tee5uzUpSO5hEAvpLtdtTbtBS6KxF87NESQRNVOYSIiFOfqNI06Gly11vvgHviFgkiKmCQc8TUf4uKzq4yyBiZtJHIQp88BBeHRG2qlL8x35ioOoBLWVGCtGC-G-1dsGGYr9ymDpcHMvTKXBeigNOAxWSJpsHrBEnZds8y8MVnxOxCckGlQRoqEsGf-f69zBLskZxQADGDdT">
+</div>
+<div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-md md:items-center">
+<div class="col-span-2">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-primary mb-xs">Order #LOLA-8112</div>
+<h5 class="font-headline-md text-body-lg text-on-surface leading-tight">Loomed Indigo Meditation Throw</h5>
+<p class="font-caption text-caption text-on-surface-variant">Shipped 28.02.24</p>
+</div>
+<div class="hidden md:block">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Status</div>
+<div class="flex items-center gap-xs font-label-sm text-label-sm text-on-primary-container">
+<span class="w-1 h-1 bg-primary-container rounded-full animate-pulse"></span> In Transit
+                                </div>
+</div>
+<div class="text-right">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Value</div>
+<div class="font-label-sm text-label-sm text-on-surface">$1,120.00</div>
+</div>
+</div>
+</div>
+<!-- Item 4 (Gift Set) -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col md:flex-row md:items-center p-md group hover:bg-surface-container-high transition-all duration-500">
+<div class="w-24 h-24 bg-background border border-outline-variant shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary transition-colors" data-icon="card_giftcard">card_giftcard</span>
+</div>
+<div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-md md:items-center">
+<div class="col-span-2">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-primary mb-xs">Order #LOLA-7990</div>
+<h5 class="font-headline-md text-body-lg text-on-surface leading-tight">The Artisan Journey (Gift Set)</h5>
+<p class="font-caption text-caption text-on-surface-variant">Arrived 10.01.24</p>
+</div>
+<div class="hidden md:block">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Status</div>
+<div class="flex items-center gap-xs font-label-sm text-label-sm text-on-surface">
+<span class="w-1 h-1 bg-primary rounded-full"></span> Manifested
+                                </div>
+</div>
+<div class="text-right">
+<div class="geist-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Value</div>
+<div class="font-label-sm text-label-sm text-on-surface">$450.00</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Loyalty / Sanctuary Points Section -->
+<div class="mt-lg border border-outline-variant p-md flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest">
+<div class="mb-md md:mb-0">
+<h6 class="geist-mono text-body-lg text-primary uppercase tracking-widest">Artisan Legacy</h6>
+<p class="font-body-md text-body-md text-on-surface-variant">You have curated 4 unique stories from Sri Lanka.</p>
+</div>
+<div class="flex gap-md">
+<div class="text-center">
+<div class="geist-mono text-label-sm text-primary uppercase">Sanctuary Tier</div>
+<div class="font-display-lg text-headline-xl text-on-surface">GOLD</div>
+</div>
+<div class="w-[1px] bg-outline-variant"></div>
+<div class="text-center">
+<div class="geist-mono text-label-sm text-on-surface-variant uppercase">Next Essence At</div>
+<div class="font-headline-md text-headline-xl text-on-surface">06</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="w-full py-xl px-gutter flex flex-col items-center gap-md bg-surface-container-lowest border-t border-outline-variant">
+<div class="geist-mono text-headline-md text-primary tracking-[0.4em] uppercase mb-sm">LOLA STUDIO</div>
+<nav class="flex flex-wrap justify-center gap-md mb-md">
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">Shipping &amp; Logistics</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">Returns Policy</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">The Artisan Story</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">Privacy</a>
+</nav>
+<div class="w-12 h-[1px] bg-outline-variant"></div>
+<p class="font-caption text-caption text-on-surface-variant opacity-60 tracking-widest uppercase text-center">
+            © 2024 LOLA STUDIO. HANDMADE IN SRI LANKA.
+        </p>
+</footer>
+<!-- MOBILE BOTTOM NAV BAR -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-base bg-surface-container-lowest border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">Gallery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="self_improvement">self_improvement</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">Zen</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">Curated</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">Account</span>
+</a>
+</nav>
+<script>
+        // Smooth scroll header effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('top-bar');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-opacity-95', 'backdrop-blur-md', 'h-16');
+                header.classList.remove('h-xl');
+            } else {
+                header.classList.remove('bg-opacity-95', 'backdrop-blur-md', 'h-16');
+                header.classList.add('h-xl');
+            }
+        });
+
+        // Hover scale micro-interaction for active elements
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95', 'transition-transform');
+            });
+            el.addEventListener('mouseup', () => {
+                el.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

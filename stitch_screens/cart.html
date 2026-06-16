@@ -1,0 +1,337 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&amp;family=DM+Sans:wght@400;700&amp;family=Geist+Mono:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#e5e2dd",
+                        "inverse-primary": "#755b00",
+                        "background": "#131411",
+                        "outline": "#99907e",
+                        "surface-dim": "#131411",
+                        "surface-container-high": "#2a2a27",
+                        "on-primary-fixed": "#241a00",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "on-tertiary": "#303030",
+                        "on-secondary-container": "#b7b4b4",
+                        "outline-variant": "#4d4637",
+                        "inverse-surface": "#e5e2dd",
+                        "surface-variant": "#353532",
+                        "primary-fixed-dim": "#e6c364",
+                        "on-tertiary-container": "#404040",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-error": "#690005",
+                        "surface-container": "#20201d",
+                        "tertiary-container": "#adabab",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-low": "#1c1c19",
+                        "on-secondary": "#313030",
+                        "on-surface": "#e5e2dd",
+                        "secondary": "#c8c6c5",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "error-container": "#93000a",
+                        "on-primary": "#3d2e00",
+                        "primary": "#e6c364",
+                        "primary-container": "#c9a84c",
+                        "surface-bright": "#3a3936",
+                        "on-primary-container": "#503d00",
+                        "on-primary-fixed-variant": "#584400",
+                        "secondary-container": "#474746",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#e4e2e1",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "surface-tint": "#e6c364",
+                        "on-surface-variant": "#d0c5b2",
+                        "on-secondary-fixed-variant": "#474746",
+                        "surface-container-lowest": "#0e0e0c",
+                        "surface-container-highest": "#353532",
+                        "primary-fixed": "#ffe08f",
+                        "inverse-on-surface": "#31302d",
+                        "tertiary": "#c8c6c6",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface": "#131411"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "80px",
+                        "md": "24px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "lg": "48px"
+                    },
+                    "fontFamily": {
+                        "mono": ["Geist Mono", "monospace"],
+                        "label-sm": ["Geist Mono"],
+                        "caption": ["Geist Mono"],
+                        "body-lg": ["Geist Mono"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-xl": ["Playfair Display"],
+                        "body-md": ["Geist Mono"],
+                        "headline-xl-mobile": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", {"lineHeight": "1", "letterSpacing": "0.15em", "fontWeight": "500"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-xl-mobile": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0d0d;
+            color: #e5e2dd;
+            font-family: 'Geist Mono', monospace;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .custom-scroll::-webkit-scrollbar {
+            width: 2px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #161616;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+        }
+        .gold-underline-hover {
+            position: relative;
+        }
+        .gold-underline-hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #C9A84C;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gold-underline-hover:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-background selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-xl bg-surface dark:bg-surface-dim border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-500">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-body-lg text-body-lg text-primary tracking-widest uppercase cursor-pointer">LOLA STUDIO</h1>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase hidden md:inline">Cart (03)</span>
+<button class="text-primary transition-colors duration-500">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+</div>
+</header>
+<main class="pt-[120px] pb-xl px-gutter max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-xl">
+<!-- Left Column: Artisanal Acquisitions -->
+<div class="md:col-span-8 flex flex-col gap-lg">
+<div class="flex flex-col gap-xs mb-md">
+<span class="font-label-sm text-label-sm text-primary uppercase">Your Selection</span>
+<h2 class="font-headline-md text-headline-md text-on-background">ARTISANAL ACQUISITIONS</h2>
+</div>
+<!-- Product List -->
+<div class="flex flex-col border-t border-outline-variant">
+<!-- Item 01 -->
+<div class="flex flex-col md:flex-row py-lg gap-md border-b border-outline-variant group">
+<div class="w-full md:w-48 aspect-[3/4] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A moody, high-contrast studio photograph of a handcrafted obsidian ceramic vessel sitting on a raw stone plinth. The lighting is dramatic, highlighting the subtle textures and matte finish of the black clay. The background is a deep charcoal grey, evoking a sense of ancient spiritual luxury. Subtle gold leaf accents are visible on the rim of the piece." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBYNsVm8nbAkNeQiRbXrorF9W9geN0vTdCwMLR8CojdGNSk0H6Hp7Rk02TnDVuqgPwym4RxSQuwaz-srsnAM8lFoqaB5MZHAC6itIb64GxuT8tPzevhAaZA4SI4y24dsoAH3U2C3nbhiH7Ow1C7vRbUUjFMou3H2acp4IO9GnLQW80frUj4S2uJHmNb29U1D5C1HdD6-9dmTnZ4u0Dqq5ZsjVYLRvTNgH78NrISQD_Pdou7CyhiCpX5YopwRsFeBjz8t2bY-61Q7CR">
+</div>
+<div class="flex-1 flex flex-col justify-between py-xs">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-body-lg text-body-lg mb-xs text-on-surface">OBSIDIAN VESSEL NO. 04</h3>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-widest">Hand-thrown Stoneware | Matte Black Finish</p>
+</div>
+<span class="font-body-lg text-body-lg text-primary">$420.00</span>
+</div>
+<div class="flex items-center justify-between mt-lg">
+<div class="flex items-center gap-md border border-outline-variant px-md py-xs">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-label-sm text-label-sm w-8 text-center">01</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-error transition-colors uppercase tracking-widest gold-underline-hover">Remove</button>
+</div>
+</div>
+</div>
+<!-- Item 02 -->
+<div class="flex flex-col md:flex-row py-lg gap-md border-b border-outline-variant group">
+<div class="w-full md:w-48 aspect-[3/4] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A serene, minimalist composition featuring a stack of hand-dyed organic linen textiles in muted earth tones. The fabrics are artfully draped across a weathered wooden bench in a dimly lit studio. Soft morning light catches the fine weave of the linen. The atmosphere is quiet and meditative, reflecting artisanal Sri Lankan craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu51vEs9w94im_dTma3zniuAs875AZZfNMvejgpGKachdhy_4dsNv3LsBt_0jcMsZwYxCoIkB2Cg6XoXqD9zQNlsOEvffiasT5ljeRmDl9y1AJIWJTLhLlC0tidA1GxpENfBMD4bJuvmtGFbvfmJET7ekhmc58GtpERMC8AJ_2ymNZZq5f5XGxL9Fv-0gE_Y3OuYRR3R7E7Bba89iW1p65-jwSLIN4y_0D-__REwc4zpn-r4lJdukW-jGAfd84D8yCK20vad6VL0-G">
+</div>
+<div class="flex-1 flex flex-col justify-between py-xs">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-body-lg text-body-lg mb-xs text-on-surface">HEIRLOOM LINEN SET</h3>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-widest">Organic Sri Lankan Cotton | Indigo Dye</p>
+</div>
+<span class="font-body-lg text-body-lg text-primary">$185.00</span>
+</div>
+<div class="flex items-center justify-between mt-lg">
+<div class="flex items-center gap-md border border-outline-variant px-md py-xs">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-label-sm text-label-sm w-8 text-center">01</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-error transition-colors uppercase tracking-widest gold-underline-hover">Remove</button>
+</div>
+</div>
+</div>
+<!-- Item 03 -->
+<div class="flex flex-col md:flex-row py-lg gap-md border-b border-outline-variant group">
+<div class="w-full md:w-48 aspect-[3/4] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of a premium bronze incense burner with intricate geometric carvings, resting on a bed of dark sand. A thin plume of smoke rises delicately from the center. The bronze has a dark, aged patina that gleams subtly under warm spotlighting. The scene is shot with a shallow depth of field against a pitch-black background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-71k0LkPsyBT67m-Pub7a366wVqwiYkVQ_-I8cV2QFCdzxdgYKuRs8huBBGHUlNhRlmrWrsZ2eS3GOXMyEINmDH-gMIJ-_qPYDmOh0p1yXn5p9GjvbFi2rxLQYTqGay84EmBQUm5M8NEtXyIfw-2tovfMdljqrswZJKvxge9NA-oILRWHDTbaJY_AIE2mQM8cj5fV1gR3OyK42wjzMMyvN7RVNjJ19CbftiInrS0ouVL2yhiGmD4LMO97l3ISzZXBpknDE9C_ayzi">
+</div>
+<div class="flex-1 flex flex-col justify-between py-xs">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-body-lg text-body-lg mb-xs text-on-surface">ETHEREAL INCENSE BURNER</h3>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-widest">Aged Bronze | Geometric Relief</p>
+</div>
+<span class="font-body-lg text-body-lg text-primary">$210.00</span>
+</div>
+<div class="flex items-center justify-between mt-lg">
+<div class="flex items-center gap-md border border-outline-variant px-md py-xs">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-label-sm text-label-sm w-8 text-center">01</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-error transition-colors uppercase tracking-widest gold-underline-hover">Remove</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Shipping Note -->
+<div class="p-lg bg-surface-container-low flex items-start gap-md">
+<span class="material-symbols-outlined text-primary mt-1">info</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface uppercase mb-xs">International Fulfillment</p>
+<p class="font-caption text-caption text-on-surface-variant">Your acquisitions are being meticulously prepared by our artisans in Sri Lanka. Please allow 14-21 business days for international delivery of these handmade goods.</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Order Summary Sidebar -->
+<div class="md:col-span-4">
+<div class="sticky top-[120px] flex flex-col gap-lg bg-surface-container p-lg border border-outline-variant">
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase">Financials</span>
+<h3 class="font-body-lg text-body-lg text-on-surface">ORDER SUMMARY</h3>
+</div>
+<div class="flex flex-col gap-md py-md border-y border-outline-variant">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Subtotal</span>
+<span class="font-body-md text-body-md text-on-surface">$815.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Logistics</span>
+<span class="font-body-md text-body-md text-on-surface">$45.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Tax</span>
+<span class="font-body-md text-body-md text-on-surface">$0.00</span>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Total Balance</span>
+<span class="font-body-lg text-body-lg text-primary">$860.00</span>
+</div>
+<div class="flex flex-col gap-sm">
+<button class="w-full py-md bg-primary text-on-primary font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary-container transition-all duration-500 active:scale-95">
+                            Proceed to Checkout
+                        </button>
+<button class="w-full py-md bg-transparent border border-primary text-primary font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary-container hover:text-on-primary-container transition-all duration-500 active:scale-95">
+                            Continue Browsing
+                        </button>
+</div>
+<div class="flex flex-col gap-sm mt-md">
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">lock</span> Secure Encryption Enabled
+                        </p>
+<div class="flex gap-md opacity-40">
+<span class="material-symbols-outlined">credit_card</span>
+<span class="material-symbols-outlined">payments</span>
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl px-gutter flex flex-col items-center gap-md bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex gap-lg flex-wrap justify-center mb-md">
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">Shipping &amp; Logistics</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">Returns Policy</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">The Artisan Story</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-colors duration-300" href="#">Privacy</a>
+</div>
+<p class="font-caption text-caption text-on-surface-variant text-center opacity-60">© 2024 LOLA STUDIO. HANDMADE IN SRI LANKA.</p>
+</footer>
+<script>
+        // Simple quantity micro-interaction
+        document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                const action = e.target.innerText;
+                const container = e.target.closest('.flex');
+                const label = container.querySelector('span:not(.material-symbols-outlined)');
+                
+                if (label && (action === 'add' || action === 'remove')) {
+                    let current = parseInt(label.innerText);
+                    if (action === 'add') {
+                        current++;
+                    } else if (action === 'remove' && current > 1) {
+                        current--;
+                    }
+                    label.innerText = current.toString().padStart(2, '0');
+                }
+            });
+        });
+    </script>
+</body></html>

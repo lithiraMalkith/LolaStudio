@@ -1,0 +1,339 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Lola Studio | The Zen Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#e6c364",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-primary-container": "#503d00",
+                        "inverse-surface": "#e5e2dd",
+                        "surface": "#131411",
+                        "outline": "#99907e",
+                        "surface-container-highest": "#353532",
+                        "on-surface-variant": "#d0c5b2",
+                        "on-primary-fixed": "#241a00",
+                        "tertiary-fixed": "#e4e2e1",
+                        "secondary": "#c8c6c5",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#e5e2e1",
+                        "secondary-container": "#474746",
+                        "inverse-primary": "#755b00",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "surface-container-low": "#1c1c19",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-high": "#2a2a27",
+                        "surface-container": "#20201d",
+                        "on-secondary-container": "#b7b4b4",
+                        "on-background": "#e5e2dd",
+                        "background": "#131411",
+                        "on-primary-fixed-variant": "#584400",
+                        "tertiary": "#c8c6c6",
+                        "surface-container-lowest": "#0e0e0c",
+                        "surface-dim": "#131411",
+                        "primary-container": "#c9a84c",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "primary-fixed": "#ffe08f",
+                        "on-surface": "#e5e2dd",
+                        "tertiary-container": "#adabab",
+                        "on-tertiary": "#303030",
+                        "on-primary": "#3d2e00",
+                        "on-tertiary-container": "#404040",
+                        "surface-tint": "#e6c364",
+                        "primary-fixed-dim": "#e6c364",
+                        "outline-variant": "#4d4637",
+                        "on-secondary": "#313030",
+                        "surface-bright": "#3a3936",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#31302d",
+                        "surface-variant": "#353532",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "80px",
+                        "lg": "48px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "gutter": "24px",
+                        "sm": "12px",
+                        "xs": "4px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Geist Mono"],
+                        "display-lg-mobile": ["Geist Mono"],
+                        "display-lg": ["Geist Mono"],
+                        "label-sm": ["Geist Mono"],
+                        "headline-xl-mobile": ["Geist Mono"],
+                        "headline-xl": ["Geist Mono"],
+                        "body-lg": ["Geist Mono"],
+                        "headline-md": ["Geist Mono"],
+                        "body-md": ["Geist Mono"]
+                    },
+                    "fontSize": {
+                        "caption": ["11px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "display-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "display-lg": ["36px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                        "label-sm": ["10px", {"lineHeight": "1", "letterSpacing": "0.15em", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["20px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "headline-xl": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-lg": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "body-md": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 500ms;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .inner-glow {
+            box-shadow: inset 0 0 15px rgba(230, 195, 100, 0.05);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131411;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4d4637;
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary selection:text-on-primary font-body-md">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-xl bg-surface dark:bg-surface-dim border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<button class="text-primary hover:opacity-70">
+<span class="material-symbols-outlined !text-[20px]">menu</span>
+</button>
+</div>
+<a class="font-display-lg-mobile text-[18px] text-primary tracking-[0.3em] uppercase transition-all duration-500 hover:tracking-[0.4em]" href="#">LOLA STUDIO</a>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined !text-[20px]">search</span>
+</button>
+<button class="text-primary relative hover:opacity-70">
+<span class="material-symbols-outlined !text-[20px]">shopping_bag</span>
+<span class="absolute -top-1 -right-1 w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+</nav>
+<main class="pt-xl">
+<!-- Split Screen Product Layout -->
+<section class="flex flex-col md:flex-row min-h-screen">
+<!-- Left: Gallery (Scrollable) -->
+<div class="w-full md:w-3/5 lg:w-2/3 bg-surface-container-lowest">
+<div class="flex flex-col">
+<div class="relative group overflow-hidden">
+<img class="w-full h-[600px] md:h-[800px] object-cover grayscale hover:grayscale-0" data-alt="A close-up, high-fashion editorial shot of a handcrafted Sri Lankan ceramic incense burner resting on a dark basalt stone. The lighting is dramatic and moody, with warm gold highlights catching the subtle textures of the raw clay. The background is a deep charcoal black, creating a sense of spiritual minimalism and quiet luxury. Wisps of thin, elegant smoke curl upwards into the shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoG6wN1NHCftwcIFa2sqpTHrkS8MBWm-dqYaHnBXwKAGsF15rXY32Q4QIgvsn4ylFEpfhls2UMr9TVojABrzmku7zZiYDLauOz1xPLaAi7br4lYsaSDNk2tmbjwtWDdFRrZN4q2l96jRKpW5x9-DxqSZsdfVXsT-m-hnfrfCqK9vkAm6obYuoKQnOl3XjKkKyowqxSL42jVgTymLDLdFcHsPqFxO5CtXr6gA7DMQimBEwQRQ9MPaWgBl2nWI1SuJUpR8c0UiLGOM8w">
+</div>
+<div class="grid grid-cols-2 gap-1 mt-1">
+<div class="relative group overflow-hidden h-[400px]">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0" data-alt="Macrophotography of a raw, unglazed terracotta surface with fine artisanal details. The image uses a dark and atmospheric palette of earth tones and deep shadows, illuminated by a soft, directional light that emphasizes the organic imperfections. The overall aesthetic is grounded and exclusive, echoing the ancient craftsmanship of Lola Studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL12M-KzIhid5FUV2aAqQB0wa-3KVq-s6tJ8cjQmKMQ4yf1CHs_kWFh-cBq4ic5HjTxMwYHpz4TWAKhHLk_7ZxV6lHME7Kkspt5RQdHq_VdRvAQXu4yag49xqMkpT1JoCmGSqas7aNboVBCHYMMgAjbAmU6b1xIrsc-cO2ETCw9oO3zHCZt7qI13lPPlmMEkanhm0XEt1bEVymwRvA6B38Cat1pAcixLmfiLJ5M0tfbOO3L1XktscXrIui4Ihusr2u6NTs074Mffz0">
+</div>
+<div class="relative group overflow-hidden h-[400px]">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0" data-alt="An atmospheric still life of dried herbs and botanicals arranged on a dark, reflective surface. The composition is minimal and intentional, with golden ambient lighting creating a serene, spiritual mood. High contrast between the dark background and the warm textures of the natural materials reinforces the brand's luxury artisan identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpUH8S-ahhQOH9rdoN5m1wBuiV2KWWj3nx08UlpIjhVCtQ0z284lf3UwZITBk9WIbmya9V9w9ixrMjIlOZb_PSVLkf6-2X_ak2raDZfaUhk-BhPHV-_Nkdg06BT6ke3RG_pfnQpLjTFFh7kMOFFe4PjhWUxUYa9a9sR3yXlTKn8wn6qaUSM8DWi23gBLfI_HEeV3eE8Wi63Ivy5FTuJ0CcrjUNNcHY7DnmyonsQ35mI775xjiU4vTyMLyt5PWwrpLG9VtCGs9cj6ZA">
+</div>
+</div>
+<div class="relative group overflow-hidden h-[600px] mt-1">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0" data-alt="A lifestyle shot of a Zen meditation space featuring handmade products from Lola Studio. A low wooden table holds a bowl of incense and a small bronze statue, set against a backdrop of deep shadows and soft, warm light filtering through a screen. The mood is tranquil, sophisticated, and deeply rooted in Sri Lankan heritage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6IWnOVUWoPfoDwFYY6Qu9BFljcWs8_qSz0MmRwvtSPrPRzxPnkw6Ip_T0Mv0e1MsjZUlmzL6KcIOz0O-Q2CreehlE1nZ0pGDB3tGalWlwlMj5DRWI8HaWeTsEKxS5Q92t3q1Ff-FqmA-BTk8hwTkvICT4l0NU1_u8Et3H-GsVcczQ7Lwt91uHP9f83Iu_ekIbbfq4qWITuR8TUqHmM5Sxv-WIWc0mSSI2fJzrdxJg8A1gtgEi0SQvk4VvmRLjc7Um55jfMv5RebZR">
+</div>
+</div>
+</div>
+<!-- Right: Product Info (Sticky) -->
+<div class="w-full md:w-2/5 lg:w-1/3 px-gutter py-xl md:sticky md:top-xl md:h-[calc(100vh-80px)] overflow-y-auto bg-background">
+<div class="flex flex-col gap-lg max-w-sm mx-auto md:mx-0">
+<header class="flex flex-col gap-base">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest opacity-80">The Zen Collection</span>
+<h1 class="font-display-lg text-display-lg text-on-surface">Monolith Burner</h1>
+<p class="font-headline-md text-headline-md text-primary opacity-90">$185.00</p>
+</header>
+<div class="flex flex-col gap-md">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed opacity-80">
+                        Hand-carved from rare volcanic basalt found in the central highlands of Sri Lanka. Each burner is a unique sculptural piece.
+                    </p>
+<div class="border-t border-outline-variant pt-md">
+<h3 class="font-label-sm text-label-sm text-on-surface uppercase mb-base opacity-60">Materials</h3>
+<div class="flex flex-wrap gap-xs">
+<span class="px-md py-xs bg-surface-container text-on-surface-variant font-label-sm text-[9px] uppercase tracking-wider">Volcanic Basalt</span>
+<span class="px-md py-xs bg-surface-container text-on-surface-variant font-label-sm text-[9px] uppercase tracking-wider">Aged Bronze</span>
+<span class="px-md py-xs bg-surface-container text-on-surface-variant font-label-sm text-[9px] uppercase tracking-wider">Hand-poured Earth</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-md mt-auto">
+<div class="flex items-center justify-between border-b border-outline-variant pb-base">
+<span class="font-label-sm text-label-sm text-on-surface uppercase opacity-60">Quantity</span>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined !text-[18px]">remove</span></button>
+<span class="font-body-md text-body-md w-6 text-center">01</span>
+<button class="text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined !text-[18px]">add</span></button>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-sm text-label-sm py-md uppercase tracking-[0.2em] hover:opacity-90 active:scale-[0.99] transition-all">
+                        Add to Sanctuary
+                    </button>
+<button class="w-full border border-outline text-on-surface-variant font-label-sm text-label-sm py-md uppercase tracking-[0.2em] hover:bg-surface-container-high hover:text-on-surface transition-all">
+                        Find in Studio
+                    </button>
+</div>
+<div class="grid grid-cols-2 gap-gutter mt-lg">
+<div class="flex flex-col gap-xs opacity-60 hover:opacity-100 cursor-default">
+<span class="material-symbols-outlined text-primary !text-[18px]">local_shipping</span>
+<span class="font-caption text-caption text-on-surface-variant">Global Logistics</span>
+</div>
+<div class="flex flex-col gap-xs opacity-60 hover:opacity-100 cursor-default">
+<span class="material-symbols-outlined text-primary !text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-caption text-caption text-on-surface-variant">Artisan Certified</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Story -->
+<section class="bg-surface-container-lowest py-xl px-gutter">
+<div class="max-container mx-auto max-w-container-max flex flex-col md:flex-row items-center gap-xl">
+<div class="w-full md:w-1/2 scroll-reveal">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-lg">The Artisan Mandate</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-md opacity-80">
+                    At Lola Studio, we believe that the objects surrounding us carry an energetic weight. Our process rejects the speed of modern manufacturing in favor of the 'slow craft'.
+                </p>
+<a class="inline-block font-label-sm text-label-sm text-primary uppercase border-b border-primary/30 pb-1 hover:border-primary transition-all" href="#">Discover Our Philosophy</a>
+</div>
+<div class="w-full md:w-1/2 scroll-reveal">
+<div class="relative p-base border border-outline-variant inner-glow">
+<img class="w-full grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-1000" data-alt="An evocative black and white photograph of an artisan's weathered hands carefully working with a piece of dark, textured clay. The image is high-contrast, highlighting every line and wrinkle, representing a deep reverence for manual labor and traditional Sri Lankan craftsmanship. The setting is a dimly lit, minimalist workshop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxJcsb4pfVNCZPfcZ--pyRIkL3uJc64I0PQ4GIcPwtYFb41CpLGen0QOwllOihOEhjYCYxJ8UP1upPNKRxkBWLzbrZe9R0JabKZ2fAj3jn7eo0HD-XGm4grA7ophVE0Az8F9lEfKaWtBqUakRlP-7UbZQ9a2lSck4KVWv2l2br6QuZqFzG1EllfFeW8M4bhEGyFt0Z07Rjnr_PZAnHeIDswKaQMGw-bAH96C4KF4kWRIOrYctnqrVbFcF9nl0igg7799Jo2TSBGYRR">
+</div>
+</div>
+</div>
+</section>
+<!-- You May Also Like Section -->
+<section class="py-xl px-gutter bg-background">
+<div class="max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-xl">
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Related Objects</h2>
+<a class="font-label-sm text-label-sm text-on-surface-variant uppercase hover:text-primary transition-all opacity-60 hover:opacity-100" href="#">View Collection</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="group cursor-pointer scroll-reveal">
+<div class="relative overflow-hidden mb-md aspect-[3/4] bg-surface-container grayscale group-hover:grayscale-0">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" data-alt="A minimalist editorial product shot of a smooth, dark obsidian meditation bowl. The lighting is low-key, with a single sharp highlight emphasizing the bowl's perfect circular form. It is set against a matte black background, embodying the luxury and spiritual minimalist aesthetic of the Lola Studio brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0xscuGj4iPPmerp0RuJThibHgi2G6YJ5n8M0IfnT8600Ly7qP4MbEbBsIf5jsAotXyK6xjEwKgA5CqJ0JaPPgdue_6ZwrJVyqyCJzpFYKZoivFu1cRpmlqCG7K-xyN-faK6e902VsUbylFD5nqgGVp9sAh57fDK-UZXT1dLvKDKIOjvjRQDhNhXVagsHDTY4z7J2Vfboi8R37grFjEJ5PqSJo9-OSbmKH10t_84LoonGRmOBXep9C9zxgrzzEg55kbZx_z4wi7N7J">
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs group-hover:text-primary transition-all">Obsidian Vessel</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest opacity-60">$210.00</p>
+</div>
+<!-- Card 2 -->
+<div class="group cursor-pointer scroll-reveal">
+<div class="relative overflow-hidden mb-md aspect-[3/4] bg-surface-container grayscale group-hover:grayscale-0">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" data-alt="A premium set of handmade incense sticks bundled with a silk ribbon, resting on a dark wood grain surface. Warm, golden hour light spills across the scene, creating a sense of luxury, calm, and exclusivity. The textures of the natural materials are rendered in high detail against deep, rich shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADZ2HHP_q1dVL0csKTBmOIiJcAJMtfLPZIIbUzYZwu8n3fXvXPFH5fDzA8u4r6RHGVUtrIVTnrgjvBLCDPUm8yIIRFjqerHHCEZxoiBfi1y5ZjJ99u8H0_7nS_Vb8pBozQsvr4wBkrMTPwHpdOWJj9jXLPS66bNtnj_Umc5v3-MXUf5X08HuzwyHTqK1RGJ9lWXqkUzECnkIbc69rLoc6qzEyzEKH6i5T14CI3snB19yfF5Qpfi8zIDxXlzz0JLZRR7lasEjnrXsDb">
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs group-hover:text-primary transition-all">Temple Incense Set</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest opacity-60">$45.00</p>
+</div>
+<!-- Card 3 -->
+<div class="group cursor-pointer scroll-reveal">
+<div class="relative overflow-hidden mb-md aspect-[3/4] bg-surface-container grayscale group-hover:grayscale-0">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" data-alt="An artistic shot of a small bronze statue of a serene figure, with a deep green patina highlighting its age and craftsmanship. The lighting is cinematic, casting long shadows and creating a spiritual atmosphere. It is presented as a high-end luxury artifact, centered in a dark, minimalist composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvWHcdvbQ1Siy1WFf3jWDN1jZvw1KYCRbuN-1cylQFwgiakHwXq_G1zuRUPzEqPYeJV2r3bmzosNzsQlqCxqvpGSF5rK0CGAPInV_ypiyC-Y3RS4lba5-FvMpyLzPEz7q49H1atOcdpE85E-rJokXlEJE5bVe-3a4PvAu84s6mvjM1UkVIFlB6cwgg3dQLLIdmz97bVfl4MCN3N-hQpuyCZbOHh9LVU3ZhicF56VsgdgDm9qJy8eWKk4Qya8qhJ8jl1BLsHo9N1aLm">
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs group-hover:text-primary transition-all">Verdigris Guardian</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest opacity-60">$320.00</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl px-gutter flex flex-col items-center gap-md bg-surface-container-lowest border-t border-outline-variant">
+<div class="font-display-lg text-[16px] text-primary tracking-[0.4em] uppercase mb-lg transition-all hover:tracking-[0.5em] cursor-default">LOLA STUDIO</div>
+<div class="flex flex-wrap justify-center gap-lg">
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-all uppercase tracking-widest opacity-60" href="#">Logistics</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-all uppercase tracking-widest opacity-60" href="#">Returns</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-all uppercase tracking-widest opacity-60" href="#">Artisan Story</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-all uppercase tracking-widest opacity-60" href="#">Privacy</a>
+</div>
+<div class="mt-xl font-caption text-[9px] text-on-surface-variant opacity-30 uppercase tracking-widest">
+        © 2024 LOLA STUDIO. SRI LANKA.
+    </div>
+</footer>
+<!-- Bottom Nav for Mobile -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-base bg-surface-container-lowest border-t border-outline-variant backdrop-blur-md bg-opacity-80">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100" href="#">
+<span class="material-symbols-outlined !text-[18px]">auto_awesome</span>
+<span class="font-label-sm text-[9px]">Gallery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary" href="#">
+<span class="material-symbols-outlined !text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="font-label-sm text-[9px]">Curated</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100" href="#">
+<span class="material-symbols-outlined !text-[18px]">self_improvement</span>
+<span class="font-label-sm text-[9px]">Zen</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100" href="#">
+<span class="material-symbols-outlined !text-[18px]">person</span>
+<span class="font-label-sm text-[9px]">Account</span>
+</a>
+</nav>
+<script>
+    // Simple scroll observer for animations
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Floating Header effect
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 20) {
+            nav.classList.add('bg-opacity-80', 'backdrop-blur-xl', 'h-lg');
+            nav.classList.remove('h-xl');
+        } else {
+            nav.classList.remove('bg-opacity-80', 'backdrop-blur-xl', 'h-lg');
+            nav.classList.add('h-xl');
+        }
+    });
+</script>
+</body></html>

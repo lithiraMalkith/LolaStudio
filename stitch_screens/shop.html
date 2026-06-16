@@ -1,0 +1,352 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LOLA STUDIO | The Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#e6c364",
+                    "on-secondary-fixed-variant": "#474746",
+                    "on-primary-container": "#503d00",
+                    "inverse-surface": "#e5e2dd",
+                    "surface": "#131411",
+                    "outline": "#99907e",
+                    "surface-container-highest": "#353532",
+                    "on-surface-variant": "#d0c5b2",
+                    "on-primary-fixed": "#241a00",
+                    "tertiary-fixed": "#e4e2e1",
+                    "secondary": "#c8c6c5",
+                    "error": "#ffb4ab",
+                    "secondary-fixed": "#e5e2ed",
+                    "secondary-container": "#474746",
+                    "inverse-primary": "#755b00",
+                    "on-tertiary-fixed": "#1b1c1c",
+                    "surface-container-low": "#1c1c19",
+                    "on-tertiary-fixed-variant": "#474746",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-container-high": "#2a2a27",
+                    "surface-container": "#20201d",
+                    "on-secondary-container": "#b7b4b4",
+                    "on-background": "#e5e2dd",
+                    "background": "#131411",
+                    "on-primary-fixed-variant": "#584400",
+                    "tertiary": "#c8c6c6",
+                    "surface-container-lowest": "#0e0e0c",
+                    "surface-dim": "#131411",
+                    "primary-container": "#c9a84c",
+                    "tertiary-fixed-dim": "#c8c6c5",
+                    "primary-fixed": "#ffe08f",
+                    "on-surface": "#e5e2dd",
+                    "tertiary-container": "#adabab",
+                    "on-tertiary": "#303030",
+                    "on-primary": "#3d2e00",
+                    "on-tertiary-container": "#404040",
+                    "surface-tint": "#e6c364",
+                    "primary-fixed-dim": "#e6c364",
+                    "outline-variant": "#4d4637",
+                    "on-secondary": "#313030",
+                    "surface-bright": "#3a3936",
+                    "on-error": "#690005",
+                    "inverse-on-surface": "#31302d",
+                    "surface-variant": "#353532",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "64px",
+                    "lg": "40px",
+                    "container-max": "1200px",
+                    "base": "8px",
+                    "gutter": "32px",
+                    "sm": "12px",
+                    "xs": "4px",
+                    "md": "20px"
+            },
+            "fontFamily": {
+                    "caption": ["Geist Mono"],
+                    "display-lg-mobile": ["Geist Mono"],
+                    "display-lg": ["Geist Mono"],
+                    "label-sm": ["Geist Mono"],
+                    "headline-xl-mobile": ["Geist Mono"],
+                    "headline-xl": ["Geist Mono"],
+                    "body-lg": ["Geist Mono"],
+                    "headline-md": ["Geist Mono"],
+                    "body-md": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "caption": ["11px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "display-lg-mobile": ["18px", {"lineHeight": "1.2", "letterSpacing": "0.4em", "fontWeight": "400"}],
+                    "display-lg": ["24px", {"lineHeight": "1.1", "letterSpacing": "0.5em", "fontWeight": "400"}],
+                    "label-sm": ["10px", {"lineHeight": "1", "letterSpacing": "0.15em", "fontWeight": "500"}],
+                    "headline-xl-mobile": ["20px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                    "headline-xl": ["24px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                    "body-lg": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["13px", {"lineHeight": "1.3", "letterSpacing": "0.05em", "fontWeight": "400"}],
+                    "body-md": ["12px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0D0D0D;
+            color: #e5e2dd;
+            overflow-x: hidden;
+            font-family: 'Geist Mono', monospace;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20;
+            font-size: 18px;
+        }
+        .product-card:hover .overlay {
+            opacity: 1;
+        }
+        .transition-premium {
+            transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-sticky {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 100px);
+        }
+        * {
+            transition: color 500ms cubic-bezier(0.4, 0, 0.2, 1), 
+                        background-color 500ms cubic-bezier(0.4, 0, 0.2, 1), 
+                        border-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 500ms cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-xl bg-surface/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center gap-md">
+<button class="text-primary hover:opacity-70 transition-premium">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<nav class="hidden md:flex gap-lg">
+<a class="font-label-sm text-label-sm text-primary" href="#">GALLERY</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary" href="#">ZEN</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary" href="#">CURATED</a>
+</nav>
+</div>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary uppercase cursor-pointer hover:tracking-[0.5em] transition-premium">LOLA STUDIO</h1>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-premium">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-primary hover:opacity-70 transition-premium">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</header>
+<main class="pt-[110px] pb-xl px-gutter max-w-container-max mx-auto flex gap-xl">
+<!-- Sidebar -->
+<aside class="hidden lg:block w-56 flex-shrink-0 sidebar-sticky">
+<div class="mb-lg">
+<h3 class="font-label-sm text-label-sm text-primary uppercase mb-md tracking-[0.2em] opacity-80">Search</h3>
+<div class="relative">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/30 py-2 px-0 text-body-md focus:ring-0 focus:border-primary placeholder:text-on-surface-variant/30 uppercase font-caption text-[10px] transition-premium" placeholder="FIND ARTISANRY..." type="text">
+</div>
+</div>
+<div class="mb-lg">
+<h3 class="font-label-sm text-label-sm text-primary uppercase mb-md tracking-[0.2em] opacity-80">Categories</h3>
+<ul class="space-y-xs">
+<li>
+<button class="font-headline-md text-headline-md text-primary border-l border-primary pl-4 w-full text-left transition-premium">THE COLLECTION</button>
+</li>
+<li>
+<button class="font-headline-md text-headline-md text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5 w-full text-left transition-premium">SPIRITUAL &amp; ZEN</button>
+</li>
+<li>
+<button class="font-headline-md text-headline-md text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5 w-full text-left transition-premium">HOME DECOR</button>
+</li>
+<li>
+<button class="font-headline-md text-headline-md text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5 w-full text-left transition-premium">GIFT SETS</button>
+</li>
+<li>
+<button class="font-headline-md text-headline-md text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5 w-full text-left transition-premium">OUR PHILOSOPHY</button>
+</li>
+</ul>
+</div>
+<div class="mt-xl pt-lg border-t border-outline-variant/20">
+<p class="font-caption text-caption text-on-surface-variant italic opacity-40">"Silence is the ultimate luxury."</p>
+</div>
+</aside>
+<!-- Product Grid Section -->
+<section class="flex-grow">
+<!-- Header/Breadcrumb -->
+<div class="flex justify-between items-end mb-lg border-b border-outline-variant/10 pb-base">
+<div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-xs uppercase">The Collection</h2>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-widest opacity-60">Handmade in Sri Lanka / 24 Artifacts</p>
+</div>
+<div class="flex gap-md items-center font-label-sm text-label-sm text-on-surface-variant uppercase">
+<span class="opacity-40">Sort:</span>
+<button class="text-primary flex items-center gap-1 hover:opacity-70 transition-premium">Newest <span class="material-symbols-outlined text-[14px]">expand_more</span></button>
+</div>
+</div>
+<!-- Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-md">
+<!-- Product Card 1 -->
+<div class="product-card group relative bg-surface-container-lowest overflow-hidden transition-premium">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container">
+<img alt="Handmade Ceramic Incense Holder" class="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII">
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-premium flex items-center justify-center">
+<button class="border border-primary/50 text-primary px-lg py-sm font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-premium">Quick View</button>
+</div>
+</div>
+<div class="p-md text-center">
+<h4 class="font-headline-md text-headline-md mb-xs uppercase opacity-90">Nirvana Incense Vessel</h4>
+<p class="font-label-sm text-label-sm text-primary">$120.00</p>
+<div class="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-premium">
+<span class="text-caption font-caption text-on-surface-variant uppercase tracking-tighter">Matte Basalt / Hand-turned</span>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="product-card group relative bg-surface-container-lowest overflow-hidden transition-premium">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container">
+<img alt="Artisan Meditation Cushion" class="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtD73ZbGmzc19qn2jhY3FuSiyO9yf13Zpvq96S9j03eIRIxmEpUO3p4F3T2sMM6lraorMknVQdLpDqpVhDE4f0PH2mg4r_LPuFytXK0993WffAqIYvP_vFj8E14-Fsd8ieXmTc79NEmtv-8NPwUDlgpR9PD1k0amLSVUpqHP2AgGO1bxYUdf1zDCpS7uNCbtJ6nyMFF6G5wC2s3QmPAFKVP0MNjQ0_wM763C7nfI4lSRICu38-yn_kG_9Z0sUbIo0ejQ-uhBNbjyHJ">
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-premium flex items-center justify-center">
+<button class="border border-primary/50 text-primary px-lg py-sm font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-premium">Quick View</button>
+</div>
+</div>
+<div class="p-md text-center">
+<h4 class="font-headline-md text-headline-md mb-xs uppercase opacity-90">Zazen Silk Cushion</h4>
+<p class="font-label-sm text-label-sm text-primary">$245.00</p>
+<div class="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-premium">
+<span class="text-caption font-caption text-on-surface-variant uppercase tracking-tighter">Loomed Silk / Raw Cotton</span>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="product-card group relative bg-surface-container-lowest overflow-hidden transition-premium">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container">
+<img alt="Hand-Carved Wooden Deity" class="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuE_MCnOiTfgTWH-0akOxfqiHbxZmpVjXu7MHr-Z4sjZfxt0Ft5NOV6nU_euSmveOqG1PJR7Gk6xoniOjmetAJ200m_7JPWlPTLhVju4XpkoPL5wDqR5FqScVRUF5mTKi2gc6dqEJV1c9iuLK6Olf9kd5ip91TurVCRXN0woV7UmlZw7iVQnwFS8lwrRLXBlUSbOiyxZ3rIiVbF4iT8ChYSanmEXkUwCpb8eBc_ELaPm89-sr-wqHfyKIBRoVMTZsWNh7gWFXGuCYg">
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-premium flex items-center justify-center">
+<button class="border border-primary/50 text-primary px-lg py-sm font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-premium">Quick View</button>
+</div>
+</div>
+<div class="p-md text-center">
+<h4 class="font-headline-md text-headline-md mb-xs uppercase opacity-90">Ancient Ebony Guardian</h4>
+<p class="font-label-sm text-label-sm text-primary">$480.00</p>
+<div class="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-premium">
+<span class="text-caption font-caption text-on-surface-variant uppercase tracking-tighter">Solid Ebony / Rare</span>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="product-card group relative bg-surface-container-lowest overflow-hidden transition-premium">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container">
+<img alt="Luxury Fragrance Set" class="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMQpKeGNhuoJOAqgiAdhspKZLLwR7ILdmJhHNhnTxBraRzl0ue06s7_NEDMKuvT2X_j5_VU2eFPZ2kOekN2Rg_U0CILvG1BGBuoLppkFRzS3JeFNpKJv4c7_dr-bO99ll0ibpHQLgviB5gtAbNUdkVzX6ceSv6Siq1k-LOBvAS5AbJMeLOuB6pK2YM985xpkoyAWdX_Ry0EBiZDFFH-PeKppA1aIHZHmA2nbwbg0RavpJYwCfDphw6jITPqRMF-IYWINdChogCTxWD">
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-premium flex items-center justify-center">
+<button class="border border-primary/50 text-primary px-lg py-sm font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-premium">Quick View</button>
+</div>
+</div>
+<div class="p-md text-center">
+<h4 class="font-headline-md text-headline-md mb-xs uppercase opacity-90">Sacred Woods Trio</h4>
+<p class="font-label-sm text-label-sm text-primary">$185.00</p>
+<div class="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-premium">
+<span class="text-caption font-caption text-on-surface-variant uppercase tracking-tighter">Sandalwood / Oud / Cedar</span>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="product-card group relative bg-surface-container-lowest overflow-hidden transition-premium">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container">
+<img alt="Minimalist Brass Bowl" class="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2crF7l0KmJixU4REITfPQVzO0d_zRrcILjxIa3AFx4Q85ceelyeaT-C5qOzBnL9NJMg1gyAbh0i2MppG4llsRc6oBqbMcZam4aIvjugxNNcNC4QsKNbJ0ypwCfevsX9TN2v8nnHtEzUyrjDiY9Rknz-rILHiLU_1fUVtKEN1EjBwOGij5xu9rNLBE9KFYA6aF--BzBAzu0GTZpphnDc2TDaSZ842FioBbpyaO524CifI4DuR9qXBku7rWAl4fp0ajMeQ7rf1xlfe6">
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-premium flex items-center justify-center">
+<button class="border border-primary/50 text-primary px-lg py-sm font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-premium">Quick View</button>
+</div>
+</div>
+<div class="p-md text-center">
+<h4 class="font-headline-md text-headline-md mb-xs uppercase opacity-90">Resonance Brass Bowl</h4>
+<p class="font-label-sm text-label-sm text-primary">$210.00</p>
+<div class="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-premium">
+<span class="text-caption font-caption text-on-surface-variant uppercase tracking-tighter">Hammered Brass / 6-inch</span>
+</div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="product-card group relative bg-surface-container-lowest overflow-hidden transition-premium">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container">
+<img alt="Woven Artisan Wall Hanging" class="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChXVZpUgvi4I7D8EJQhx7WCnA-NLvOqIMxKEinoc1o3crrdU4pQbOzfk7XzhMoNWiCZL9Ume1I8uzTyE7MvFU1QLlhOxo63gnlu5YmXFajN6nUqo5bqXZnh0f8b04T8rA_-AtRYdDWmfU2Rs7V8Te3QIqY9Ys5dwGS0DBz1juGnWWqZFHaxze_w9W_3dGierypR5jJqUqmCi-9ofLfmiIjQTbzzKE-juSxAJQ0ukRSD_OFhSKpCrBdtrZYvRcM4QE1i5S8E11aoeE6">
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-premium flex items-center justify-center">
+<button class="border border-primary/50 text-primary px-lg py-sm font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-premium">Quick View</button>
+</div>
+</div>
+<div class="p-md text-center">
+<h4 class="font-headline-md text-headline-md mb-xs uppercase opacity-90">Shadow Weaver Mural</h4>
+<p class="font-label-sm text-label-sm text-primary">$720.00</p>
+<div class="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-premium">
+<span class="text-caption font-caption text-on-surface-variant uppercase tracking-tighter">Raw Silk &amp; Jute</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-xl flex justify-center gap-lg items-center">
+<button class="text-on-surface-variant hover:text-primary transition-premium">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex gap-md font-label-sm text-label-sm">
+<span class="text-primary border-b border-primary pb-xs">01</span>
+<span class="text-on-surface-variant cursor-pointer hover:text-primary transition-premium">02</span>
+<span class="text-on-surface-variant cursor-pointer hover:text-primary transition-premium">03</span>
+<span class="text-on-surface-variant cursor-pointer hover:text-primary transition-premium">04</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-premium">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl px-gutter flex flex-col items-center gap-md bg-surface-container-lowest border-t border-outline-variant/10">
+<h3 class="font-display-lg text-display-lg text-primary uppercase mb-md transition-premium hover:tracking-[0.6em]">LOLA STUDIO</h3>
+<div class="flex flex-wrap justify-center gap-lg mb-lg">
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-premium uppercase tracking-widest" href="#">Logistics</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-premium uppercase tracking-widest" href="#">Returns</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-premium uppercase tracking-widest" href="#">Story</a>
+<a class="font-caption text-caption text-on-tertiary-container hover:text-primary transition-premium uppercase tracking-widest" href="#">Privacy</a>
+</div>
+<p class="font-caption text-[10px] text-on-surface-variant opacity-40 tracking-widest">© 2024 LOLA STUDIO. HANDMADE IN SRI LANKA.</p>
+</footer>
+<!-- Simple Intersection Observer for scroll animations -->
+<script>
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card').forEach((card, i) => {
+            card.classList.add('opacity-0', 'translate-y-4');
+            card.style.transitionDelay = `${i * 50}ms`;
+            observer.observe(card);
+        });
+    </script>
+</body></html>
