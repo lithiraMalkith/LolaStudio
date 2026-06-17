@@ -28,9 +28,6 @@ export default function Header() {
         <Link href="/contact" className="text-primary hover:text-primary-fixed text-[13px] uppercase tracking-widest hidden md:block">
           Contact
         </Link>
-        <button className="text-primary hover:scale-110 md:hidden">
-          <span className="material-symbols-outlined" data-icon="menu">menu</span>
-        </button>
       </div>
       
       <Link href="/">

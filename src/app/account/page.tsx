@@ -135,7 +135,7 @@ export default function AccountPage() {
         <section className="max-w-container-max mx-auto px-gutter pb-xl grid grid-cols-1 md:grid-cols-12 gap-lg items-start">
           
           {/* Left Column: Personal Identity */}
-          <aside className="md:col-span-4 space-y-lg sticky top-[120px]">
+          <aside className="md:col-span-4 space-y-lg md:sticky md:top-[120px]">
             <div className="bg-surface-container-low p-md border border-outline-variant relative overflow-hidden group">
               <div className="absolute inset-0 opacity-10 pointer-events-none"></div>
               <div className="relative z-10">
@@ -267,22 +267,31 @@ export default function AccountPage() {
                     <div className="w-24 h-24 bg-background border border-outline-variant shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden flex items-center justify-center">
                       <span className="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary transition-colors">card_giftcard</span>
                     </div>
-                    <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-md md:items-center">
-                      <div className="col-span-2">
-                        <div className="font-label-sm text-[10px] uppercase tracking-widest text-primary mb-xs">Order #{order.id.slice(-8)}</div>
-                        <h5 className="font-headline-md text-[18px] text-on-surface leading-tight uppercase">{order.items ? order.items.length : 0} Artifact{order.items && order.items.length !== 1 ? 's' : ''}</h5>
-                        <p className="font-caption text-[11px] text-on-surface-variant uppercase tracking-widest mt-1">Initiated {new Date(order.createdAt).toLocaleDateString()}</p>
+                    <div className="flex-1 flex flex-col md:grid md:grid-cols-4 gap-sm md:gap-md md:items-center w-full">
+                      <div className="md:col-span-2 flex justify-between items-start md:block">
+                        <div>
+                          <div className="font-label-sm text-[10px] uppercase tracking-widest text-primary mb-xs">Order #{order.id.slice(-8)}</div>
+                          <h5 className="font-headline-md text-[18px] text-on-surface leading-tight uppercase">{order.items ? order.items.length : 0} Artifact{order.items && order.items.length !== 1 ? 's' : ''}</h5>
+                          <p className="font-caption text-[11px] text-on-surface-variant uppercase tracking-widest mt-1">Initiated {new Date(order.createdAt).toLocaleDateString()}</p>
+                        </div>
+                        {/* Status for Mobile */}
+                        <div className="md:hidden mt-1">
+                          <div className={`flex items-center gap-xs font-label-sm text-[10px] uppercase tracking-widest ${order.status === 'pending' ? 'text-primary-container' : 'text-on-surface'}`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span> 
+                            {order.status}
+                          </div>
+                        </div>
                       </div>
                       <div className="hidden md:block">
                         <div className="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Status</div>
                         <div className={`flex items-center gap-xs font-label-sm text-[11px] uppercase tracking-widest ${order.status === 'pending' ? 'text-primary-container' : 'text-on-surface'}`}>
-                          <span className={`w-1 h-1 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span> 
+                          <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span> 
                           {order.status}
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Value</div>
-                        <div className="font-label-sm text-[12px] text-on-surface">${order.total.toFixed(2)}</div>
+                      <div className="flex justify-between items-center md:block md:text-right mt-xs md:mt-0 pt-sm md:pt-0 border-t border-outline-variant md:border-0">
+                        <div className="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant md:mb-xs">Value</div>
+                        <div className="font-headline-md text-[15px] md:text-[14px] text-on-surface font-medium">${order.total.toFixed(2)}</div>
                       </div>
                     </div>
                   </div>
@@ -291,7 +300,7 @@ export default function AccountPage() {
             </div>
 
             {/* Loyalty / Sanctuary Points Section */}
-            <div className="mt-lg border border-outline-variant p-md flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest">
+            <div className="mt-lg border border-outline-variant p-md flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest text-center md:text-left">
               <div className="mb-md md:mb-0">
                 <h6 className="font-body-lg text-[15px] text-primary uppercase tracking-widest">Artisan Legacy</h6>
                 <p className="font-body-md text-[13px] text-on-surface-variant uppercase tracking-widest">You have curated {orders.length} unique stories.</p>

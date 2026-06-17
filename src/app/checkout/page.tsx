@@ -304,17 +304,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Promo Code */}
-              <div className="pt-base">
-                <div className="flex gap-xs">
-                  <input
-                    className="flex-grow bg-transparent border-0 border-b border-outline-variant py-xs font-label-sm text-[11px] text-on-surface uppercase focus:border-primary focus:ring-0 px-0"
-                    placeholder="PROMO CODE"
-                    type="text"
-                  />
-                  <button className="px-md font-label-sm text-[11px] text-primary uppercase hover:bg-primary/10 transition-colors">Apply</button>
-                </div>
-              </div>
+
             </div>
           </aside>
 

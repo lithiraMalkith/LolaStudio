@@ -111,18 +111,18 @@ export default function MessagesPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 md:flex-col md:items-end shrink-0 text-xs text-brand-muted">
+              <div className="flex flex-col md:items-end gap-1.5 shrink-0 text-xs text-brand-muted w-full md:w-auto pt-3 md:pt-0 border-t border-brand-border/30 md:border-0">
                 <div className="flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5" />
-                  <span>{message.name}</span>
+                  <User className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">{message.name}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Info className="w-3.5 h-3.5" />
-                  <a href={`mailto:${message.email}`} className="hover:text-brand-gold transition-colors">{message.email}</a>
+                  <Info className="w-3.5 h-3.5 shrink-0" />
+                  <a href={`mailto:${message.email}`} className="hover:text-brand-gold transition-colors truncate">{message.email}</a>
                 </div>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <Clock className="w-3.5 h-3.5" />
-                  <span>{new Date(message.createdAt).toLocaleString()}</span>
+                <div className="flex items-center gap-1.5 md:mt-1">
+                  <Clock className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">{new Date(message.createdAt).toLocaleString()}</span>
                 </div>
               </div>
             </div>
