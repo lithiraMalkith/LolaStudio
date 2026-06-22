@@ -10,21 +10,21 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-base">
           <p className="font-label-sm text-label-sm text-on-surface uppercase mb-xs opacity-60">Shop</p>
-          <Link href="/shop" className="font-caption text-caption text-on-tertiary-container hover:text-primary">The Collection</Link>
-          <Link href="/shop" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Gift Sets</Link>
-          <Link href="/shop" className="font-caption text-caption text-on-tertiary-container hover:text-primary">New Arrivals</Link>
+          <Link href="/shop?category=Spiritual+%26+Zen" className="font-caption text-caption text-on-tertiary-container hover:text-primary">SPIRITUAL & ZEN</Link>
+          <Link href="/shop?category=Home+Decor" className="font-caption text-caption text-on-tertiary-container hover:text-primary">HOME DECOR</Link>
+          <Link href="/shop?category=Gift+Sets" className="font-caption text-caption text-on-tertiary-container hover:text-primary">GIFT SETS</Link>
         </div>
         <div className="flex flex-col gap-base">
           <p className="font-label-sm text-label-sm text-on-surface uppercase mb-xs opacity-60">Company</p>
-          <Link href="/about" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Our Philosophy</Link>
-          <Link href="/about" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Artisan Story</Link>
-          <Link href="/about" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Sustainability</Link>
+          <Link href="/about#story-text" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Artisan Story</Link>
+          <Link href="/about#philosophy-grid" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Philosophy</Link>
+          <Link href="/about#studio-content" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Born of the Coast</Link>
         </div>
         <div className="flex flex-col gap-base">
           <p className="font-label-sm text-label-sm text-on-surface uppercase mb-xs opacity-60">Contact</p>
-          <Link href="/contact" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Support</Link>
-          <Link href="/contact" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Logistics</Link>
-          <Link href="/contact" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Privacy</Link>
+          <a href="#" className="font-caption text-caption text-on-tertiary-container hover:text-primary">WhatsApp</a>
+          <a href="https://vt.tiktok.com/ZSC1x1sW1/" target="_blank" rel="noopener noreferrer" className="font-caption text-caption text-on-tertiary-container hover:text-primary">TikTok</a>
+          <a href="#" className="font-caption text-caption text-on-tertiary-container hover:text-primary">Facebook</a>
         </div>
       </div>
       <div className="w-full flex flex-col md:flex-row justify-between items-center border-t border-outline-variant/30 pt-lg gap-md">

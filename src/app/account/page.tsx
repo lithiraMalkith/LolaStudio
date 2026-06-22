@@ -29,8 +29,10 @@ export default function AccountPage() {
   const [editForm, setEditForm] = useState({
     displayName: '',
     email: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    address: ''
   })
+  const [profile, setProfile] = useState<any>(null)
   const [isSaving, setIsSaving] = useState(false)
 
   const handleSaveProfile = async () => {
@@ -70,7 +72,8 @@ export default function AccountPage() {
     setEditForm({
       displayName: user?.displayName || '',
       email: user?.email || '',
-      phoneNumber: user?.phoneNumber || ''
+      phoneNumber: user?.phoneNumber || '',
+      address: profile?.address || ''
     })
     setIsEditing(true)
   }
@@ -82,6 +85,17 @@ export default function AccountPage() {
         setUser(user)
         try {
           const token = await user.getIdToken()
+          
+          // Fetch profile
+          const profileRes = await fetch('/api/user/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
+          const profileData = await profileRes.json()
+          if (profileData.success) {
+            setProfile(profileData.data)
+          }
+
+          // Fetch orders
           const res = await fetch('/api/user/orders', {
             headers: { 'Authorization': `Bearer ${token}` }
           })
@@ -90,7 +104,7 @@ export default function AccountPage() {
             setOrders(data.data)
           }
         } catch (err) {
-          console.error("Error fetching orders:", err)
+          console.error("Error fetching data:", err)
         }
       } else {
         router.push('/login')
@@ -133,7 +147,7 @@ export default function AccountPage() {
 
         {/* Main Dashboard Content */}
         <section className="max-w-container-max mx-auto px-gutter pb-xl grid grid-cols-1 md:grid-cols-12 gap-lg items-start">
-          
+
           {/* Left Column: Personal Identity */}
           <aside className="md:col-span-4 space-y-lg md:sticky md:top-[120px]">
             <div className="bg-surface-container-low p-md border border-outline-variant relative overflow-hidden group">
@@ -149,16 +163,16 @@ export default function AccountPage() {
                     <span className="font-label-sm text-[10px] text-primary opacity-50 uppercase tracking-widest">Editing</span>
                   )}
                 </div>
-                
+
                 <div className="space-y-md">
                   <div className="group/input">
                     <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Soul Name</label>
                     <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
                       {isEditing ? (
-                        <input 
-                          type="text" 
-                          value={editForm.displayName} 
-                          onChange={(e) => setEditForm({...editForm, displayName: e.target.value})}
+                        <input
+                          type="text"
+                          value={editForm.displayName}
+                          onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
                           className="bg-transparent border-none outline-none font-body-lg text-[15px] text-on-surface w-full"
                           placeholder="Artisan Soul"
                         />
@@ -171,10 +185,10 @@ export default function AccountPage() {
                     <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Email Resonance</label>
                     <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
                       {isEditing ? (
-                        <input 
-                          type="email" 
-                          value={editForm.email} 
-                          onChange={(e) => setEditForm({...editForm, email: e.target.value})}
+                        <input
+                          type="email"
+                          value={editForm.email}
+                          onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
                           className="bg-transparent border-none outline-none font-body-lg text-[15px] text-on-surface w-full"
                           placeholder="soul@example.com"
                         />
@@ -187,10 +201,10 @@ export default function AccountPage() {
                     <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Mobile Resonance</label>
                     <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
                       {isEditing ? (
-                        <input 
-                          type="tel" 
-                          value={editForm.phoneNumber} 
-                          onChange={(e) => setEditForm({...editForm, phoneNumber: e.target.value})}
+                        <input
+                          type="tel"
+                          value={editForm.phoneNumber}
+                          onChange={(e) => setEditForm({ ...editForm, phoneNumber: e.target.value })}
                           className="bg-transparent border-none outline-none font-body-lg text-[15px] text-on-surface w-full"
                           placeholder="+94771234567"
                         />
@@ -199,18 +213,34 @@ export default function AccountPage() {
                       )}
                     </div>
                   </div>
+                  <div className="group/input">
+                    <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Sanctuary Address</label>
+                    <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={editForm.address}
+                          onChange={(e) => setEditForm({ ...editForm, address: e.target.value })}
+                          className="bg-transparent border-none outline-none font-body-lg text-[15px] text-on-surface w-full"
+                          placeholder="Your physical location"
+                        />
+                      ) : (
+                        <span className="font-body-lg text-[15px] text-on-surface">{profile?.address || 'Not provided'}</span>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
                 {isEditing && (
                   <div className="mt-md flex gap-sm">
-                    <button 
+                    <button
                       onClick={() => setIsEditing(false)}
                       disabled={isSaving}
                       className="flex-1 py-sm border border-outline-variant text-on-surface-variant font-label-sm uppercase tracking-widest hover:bg-surface-container-high transition-colors disabled:opacity-50"
                     >
                       Cancel
                     </button>
-                    <button 
+                    <button
                       onClick={handleSaveProfile}
                       disabled={isSaving}
                       className="flex-1 py-sm bg-primary text-on-primary font-label-sm uppercase tracking-widest hover:bg-primary/90 transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
@@ -221,11 +251,11 @@ export default function AccountPage() {
                 )}
 
                 <div className="mt-xl pt-md border-t border-outline-variant flex gap-sm">
-                  <button 
+                  <button
                     onClick={handleSignOut}
                     className="border border-primary text-primary px-md py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary/5 transition-all w-full"
                   >
-                    Disconnect
+                    Logout
                   </button>
                 </div>
               </div>
@@ -233,10 +263,10 @@ export default function AccountPage() {
 
             {/* Subtle Decorative Card */}
             <div className="bg-surface-container-lowest p-md border border-outline-variant relative overflow-hidden h-64 flex flex-col justify-end">
-              <img 
-                alt="Sri Lankan Ceramic" 
-                className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpvP3yWw5zmPKOCZFiSFu7pWEHW5il2vbYK7v1O6eHuFdkO00qFSWveZ-N3JBQbT3aaFI-z6EqDNdP9H9-PCpVc-_5vzW1Yau1dLf-nMzVibin_ZNOTvPM48M2a870XTlV7aT7SiViWZlRb2KYrN6tMwxJ5GMEOOLpHC8aIgUPAm39w8w3aNvCAZVLB9LGfVxyuasc4Kjq89PmV9GoVPkI3pt1Z5DDsrCSYC0iKgOqjSED-wGcChYx6stXZjIabrpzGnoCquTtXmSh" 
+              <img
+                alt="Sri Lankan Ceramic"
+                className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpvP3yWw5zmPKOCZFiSFu7pWEHW5il2vbYK7v1O6eHuFdkO00qFSWveZ-N3JBQbT3aaFI-z6EqDNdP9H9-PCpVc-_5vzW1Yau1dLf-nMzVibin_ZNOTvPM48M2a870XTlV7aT7SiViWZlRb2KYrN6tMwxJ5GMEOOLpHC8aIgUPAm39w8w3aNvCAZVLB9LGfVxyuasc4Kjq89PmV9GoVPkI3pt1Z5DDsrCSYC0iKgOqjSED-wGcChYx6stXZjIabrpzGnoCquTtXmSh"
               />
               <div className="relative z-10 text-on-surface">
                 <div className="font-label-sm text-[10px] uppercase tracking-widest opacity-60 mb-xs">Spiritual Essence</div>
@@ -277,7 +307,7 @@ export default function AccountPage() {
                         {/* Status for Mobile */}
                         <div className="md:hidden mt-1">
                           <div className={`flex items-center gap-xs font-label-sm text-[10px] uppercase tracking-widest ${order.status === 'pending' ? 'text-primary-container' : 'text-on-surface'}`}>
-                            <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span> 
+                            <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span>
                             {order.status}
                           </div>
                         </div>
@@ -285,7 +315,7 @@ export default function AccountPage() {
                       <div className="hidden md:block">
                         <div className="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Status</div>
                         <div className={`flex items-center gap-xs font-label-sm text-[11px] uppercase tracking-widest ${order.status === 'pending' ? 'text-primary-container' : 'text-on-surface'}`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span> 
+                          <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span>
                           {order.status}
                         </div>
                       </div>

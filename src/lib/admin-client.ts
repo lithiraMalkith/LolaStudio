@@ -46,6 +46,19 @@ export async function fetchCustomers(token: string) {
   return fetchApi<Customer[]>('/api/customers', token)
 }
 
+export async function updateCustomer(token: string, customerId: string, payload: Partial<Customer>) {
+  return fetchApi<{ success: boolean }>(`/api/customers/${customerId}`, token, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function deleteCustomer(token: string, customerId: string) {
+  return fetchApi<{ success: boolean }>(`/api/customers/${customerId}`, token, {
+    method: 'DELETE',
+  })
+}
+
 export async function fetchProducts(token: string, params?: Record<string, string>) {
   const query = params
     ? '?' + new URLSearchParams(params).toString()

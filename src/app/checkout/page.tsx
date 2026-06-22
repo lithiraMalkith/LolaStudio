@@ -44,6 +44,28 @@ export default function CheckoutPage() {
       if (user) {
         try {
           const token = await user.getIdToken()
+          
+          // Fetch user profile for autofill
+          const profileRes = await fetch('/api/user/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
+          const profileData = await profileRes.json()
+          if (profileData.success && profileData.data) {
+            const data = profileData.data
+            const nameParts = (data.displayName || '').split(' ')
+            const firstName = nameParts[0] || ''
+            const lastName = nameParts.slice(1).join(' ') || ''
+            
+            setShippingInfo(prev => ({
+              ...prev,
+              firstName: prev.firstName || firstName,
+              lastName: prev.lastName || lastName,
+              address: prev.address || data.address || '',
+              phone: prev.phone || data.phoneNumber || ''
+            }))
+          }
+
+          // Fetch cart
           const res = await fetch('/api/cart', {
             headers: { 'Authorization': `Bearer ${token}` }
           })
@@ -61,7 +83,7 @@ export default function CheckoutPage() {
             setCartItems(items)
           }
         } catch (err) {
-          console.error("Error fetching cart:", err)
+          console.error("Error fetching data:", err)
         }
       } else {
         router.push('/login')

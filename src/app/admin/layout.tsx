@@ -71,7 +71,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/login')
+      router.push('/adminlogin')
     }
   }, [user, loading, router])
 
@@ -97,7 +97,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const handleSignOut = async () => {
     await signOut()
-    router.push('/login')
+    router.push('/adminlogin')
   }
 
   const isActive = (href: string) => {

@@ -5,16 +5,86 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from '@/lib/gsap-config'
 import { formatPrice } from '@/lib/utils'
 import { useAuth } from '@/contexts/auth-context'
-import { fetchCustomers } from '@/lib/admin-client'
-import { Search, Users, Phone, Mail, MapPin, ShoppingCart, Star } from 'lucide-react'
-import type { Customer } from '@/types'
+import { fetchCustomers, updateCustomer, deleteCustomer } from '@/lib/admin-client'
+import { Search, Users, Phone, Mail, MapPin, ShoppingCart, Star, Edit, Trash2 } from 'lucide-react'
+import type { Customer, VerificationStatus } from '@/types'
+import { Modal } from '@/components/modal'
 
 export default function CustomersPage() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { user } = useAuth()
+  const { user, role } = useAuth()
   const [customers, setCustomers] = useState<Customer[]>([])
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
+
+  // Modal State
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+
+  // Form State
+  const [editForm, setEditForm] = useState<Partial<Customer>>({})
+
+  const handleOpenModal = (customer: Customer) => {
+    setSelectedCustomer(customer)
+    setEditForm({
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+      verificationStatus: customer.verificationStatus || 'unverified',
+    })
+    setIsEditing(false)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setTimeout(() => {
+      setSelectedCustomer(null)
+      setIsEditing(false)
+    }, 200)
+  }
+
+  const handleSaveCustomer = async () => {
+    if (!user || !selectedCustomer) return
+    setIsSaving(true)
+    try {
+      const token = await user.getIdToken()
+      await updateCustomer(token, selectedCustomer.id, editForm)
+      
+      // Optimistic update
+      setCustomers((prev) =>
+        prev.map((c) => (c.id === selectedCustomer.id ? { ...c, ...editForm } : c))
+      )
+      handleCloseModal()
+    } catch (error) {
+      console.error('Failed to update customer:', error)
+      alert('Failed to update customer. Are you a super admin?')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const handleDeleteCustomer = async () => {
+    if (!user || !selectedCustomer) return
+    if (!confirm(`Are you sure you want to permanently delete customer ${selectedCustomer.name}?`)) return
+    
+    setIsSaving(true)
+    try {
+      const token = await user.getIdToken()
+      await deleteCustomer(token, selectedCustomer.id)
+      
+      // Optimistic update
+      setCustomers((prev) => prev.filter((c) => c.id !== selectedCustomer.id))
+      handleCloseModal()
+    } catch (error) {
+      console.error('Failed to delete customer:', error)
+      alert('Failed to delete customer. Are you a super admin?')
+    } finally {
+      setIsSaving(false)
+    }
+  }
 
   useGSAP(() => {
     gsap.from('.page-header', { opacity: 0, y: -10, duration: 0.4, ease: 'power2.out' })
@@ -73,7 +143,14 @@ export default function CustomersPage() {
       {/* Customer Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {filtered.map((customer) => (
-          <div key={customer.id} className="customer-card bg-brand-surface rounded-xl border border-brand-border p-5 card-hover">
+          <div key={customer.id} className="customer-card bg-brand-surface rounded-xl border border-brand-border p-5 card-hover relative group">
+            <button 
+              onClick={() => handleOpenModal(customer)}
+              className="absolute top-4 right-4 p-2 text-brand-muted hover:text-brand-text bg-brand-background/50 hover:bg-brand-background rounded-full transition-all opacity-100 md:opacity-0 group-hover:opacity-100 focus:opacity-100"
+              title="Manage Customer"
+            >
+              <Edit className="w-4 h-4" />
+            </button>
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-brand-gold/15 flex items-center justify-center">
@@ -125,6 +202,171 @@ export default function CustomersPage() {
           <p className="text-brand-muted">No customers found</p>
         </div>
       )}
+
+      {/* Customer Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title={isEditing ? 'Edit Customer' : 'Customer Details'}
+        actions={
+          isEditing ? (
+            <>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="px-4 py-2 text-sm font-medium text-brand-muted hover:text-brand-text transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveCustomer}
+                disabled={isSaving}
+                className="px-4 py-2 text-sm font-medium bg-brand-gold text-black rounded-lg hover:bg-brand-gold/90 transition-colors disabled:opacity-50"
+              >
+                {isSaving ? 'Saving...' : 'Save Changes'}
+              </button>
+            </>
+          ) : (
+            <>
+              {role === 'superadmin' && (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="px-4 py-2 text-sm font-medium bg-brand-gold/10 text-brand-gold hover:bg-brand-gold/20 rounded-lg transition-colors"
+                >
+                  Edit Profile
+                </button>
+              )}
+              <button
+                onClick={handleCloseModal}
+                className="px-4 py-2 text-sm font-medium bg-brand-border/50 text-brand-text hover:bg-brand-border rounded-lg transition-colors"
+              >
+                Close
+              </button>
+            </>
+          )
+        }
+      >
+        {selectedCustomer && (
+          <div className="space-y-6">
+            {!isEditing ? (
+              // VIEW MODE
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-brand-gold/15 flex items-center justify-center">
+                    <span className="text-brand-gold font-medium text-xl">
+                      {selectedCustomer.name.split(' ').map((n) => n[0]).join('')}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-medium text-brand-text flex items-center gap-2">
+                      {selectedCustomer.name}
+                      {selectedCustomer.isRepeat && <Star className="w-4 h-4 text-brand-gold fill-brand-gold" />}
+                    </h3>
+                    <p className="text-sm text-brand-muted capitalize">
+                      {selectedCustomer.verificationStatus || 'unverified'} Customer
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 py-4 border-y border-brand-border/50">
+                  <div>
+                    <p className="text-xs text-brand-muted mb-1">Total Orders</p>
+                    <p className="font-medium text-brand-text">{selectedCustomer.orderCount}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-brand-muted mb-1">Total Spent</p>
+                    <p className="font-medium text-brand-gold">{formatPrice(selectedCustomer.totalSpent)}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-sm">
+                    <Mail className="w-4 h-4 text-brand-muted" />
+                    <span className="text-brand-text-secondary">{selectedCustomer.email}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <Phone className="w-4 h-4 text-brand-muted" />
+                    <span className="text-brand-text-secondary">{selectedCustomer.phone}</span>
+                  </div>
+                  {selectedCustomer.address && (
+                    <div className="flex items-start gap-3 text-sm">
+                      <MapPin className="w-4 h-4 text-brand-muted mt-0.5" />
+                      <span className="text-brand-text-secondary">
+                        {selectedCustomer.address.addressLine1}
+                        {selectedCustomer.address.addressLine2 && <br />}
+                        {selectedCustomer.address.addressLine2}
+                        <br />
+                        {selectedCustomer.address.city}, {selectedCustomer.address.district}
+                        <br />
+                        {selectedCustomer.address.postalCode}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              // EDIT MODE
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-brand-muted">Full Name</label>
+                  <input
+                    type="text"
+                    value={editForm.name || ''}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full bg-brand-background border border-brand-border rounded-lg px-3 py-2 text-sm text-brand-text focus:outline-none focus:border-brand-gold transition-colors"
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-brand-muted">Email</label>
+                    <input
+                      type="email"
+                      value={editForm.email || ''}
+                      onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                      className="w-full bg-brand-background border border-brand-border rounded-lg px-3 py-2 text-sm text-brand-text focus:outline-none focus:border-brand-gold transition-colors"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-brand-muted">Phone</label>
+                    <input
+                      type="tel"
+                      value={editForm.phone || ''}
+                      onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                      className="w-full bg-brand-background border border-brand-border rounded-lg px-3 py-2 text-sm text-brand-text focus:outline-none focus:border-brand-gold transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-brand-muted">Verification Status</label>
+                  <select
+                    value={editForm.verificationStatus || 'unverified'}
+                    onChange={(e) => setEditForm({ ...editForm, verificationStatus: e.target.value as VerificationStatus })}
+                    className="w-full bg-brand-background border border-brand-border rounded-lg px-3 py-2 text-sm text-brand-text focus:outline-none focus:border-brand-gold transition-colors appearance-none"
+                  >
+                    <option value="unverified">Unverified</option>
+                    <option value="verified">Verified</option>
+                    <option value="suspended">Suspended</option>
+                  </select>
+                </div>
+
+                {role === 'superadmin' && (
+                  <div className="pt-6 border-t border-brand-border/50">
+                    <button
+                      onClick={handleDeleteCustomer}
+                      disabled={isSaving}
+                      className="w-full py-2 flex items-center justify-center gap-2 text-sm font-medium text-red-500 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors disabled:opacity-50"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Delete Customer
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
     </div>
   )
 }

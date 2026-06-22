@@ -81,7 +81,7 @@ export default function AboutPage() {
         {/* Section 2: The Artisan Story */}
         <section className="max-w-container-max mx-auto px-gutter py-xl">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-xl items-start">
-            <div className="md:col-span-5" id="story-text">
+            <div className="md:col-span-5 scroll-mt-[120px]" id="story-text">
               <h2 className="font-headline-xl text-[36px] text-on-surface mb-lg leading-tight">
                   The Slow<br/>Movement.
               </h2>
@@ -113,7 +113,7 @@ export default function AboutPage() {
               <h2 className="font-label-sm text-[10px] text-primary tracking-[0.4em] uppercase mb-base">Our Philosophy</h2>
               <p className="font-caption text-[11px] text-on-surface-variant/60 tracking-widest uppercase">A CONVERGENCE OF ETHICS AND AESTHETICS</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-md" id="philosophy-grid">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-md scroll-mt-[120px]" id="philosophy-grid">
               {/* Spiritual Minimalism Card */}
               <div className="philosophy-card group relative p-lg border border-outline-variant/50 hover:border-primary/50 transition-all duration-700 overflow-hidden bg-surface-container-low/50 backdrop-blur-sm">
                 <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-[0.02] transition-opacity duration-700"></div>
@@ -142,7 +142,7 @@ export default function AboutPage() {
             <div className="w-full md:w-1/2 order-2 md:order-1 overflow-hidden" id="studio-image-container">
               <img id="studio-image" alt="Studio Origin" className="w-full aspect-[4/3] object-cover grayscale brightness-75 scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRqKeGfkh3DNHOM0Gd8EBkKPzaq7-6leYEKvaiYzbFtE_GFlZoOjrvC6k8cMKDAFJXNNLc8IIcFdKj0LYrwMAsNLLrCUr-hBI2GnD9RafCTROtriuLrldnAAr8UawCoyHi5elgWmWFZsZKQStKEBtTGFl1ASmaiyaXtnOsQ3r7SJCWDed1xUiG46S44FuEfy_NS5dTVDJ7VOWUT4lkxtUYNpQemtRGjeM9z45CoKMuedD20jm5I-hjfxnRjFPpc_cuwhKMYNcTOex6"/>
             </div>
-            <div className="w-full md:w-1/2 order-1 md:order-2" id="studio-content">
+            <div className="w-full md:w-1/2 order-1 md:order-2 scroll-mt-[120px]" id="studio-content">
               <h2 className="font-headline-xl text-[36px] text-on-surface mb-md tracking-tight">Born of the Coast.</h2>
               <p className="font-body-lg text-[16px] text-on-surface-variant mb-xl leading-relaxed font-light">
                   Lola Studio began in a small seaside shed in Galle. What started as a personal quest to find objects that echoed the silence of the island's temples evolved into a collective of designers and makers dedicated to preserving the "Handmade Soul."

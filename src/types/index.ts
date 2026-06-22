@@ -126,6 +126,8 @@ export interface StatusHistoryEntry {
 }
 
 // --- Customers ---
+export type VerificationStatus = 'unverified' | 'verified' | 'suspended'
+
 export interface Customer {
   id: string
   name: string
@@ -138,6 +140,7 @@ export interface Customer {
   firstOrderAt?: Date
   lastOrderAt?: Date
   createdAt: Date
+  verificationStatus?: VerificationStatus
 }
 
 // --- Dashboard ---

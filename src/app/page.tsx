@@ -1,6 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { getPopularProducts } from '@/lib/store-service'
+import type { Product } from '@/types'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -13,6 +15,11 @@ if (typeof window !== 'undefined') {
 
 export default function HomePage() {
   const container = useRef<HTMLDivElement>(null)
+  const [popularProducts, setPopularProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    getPopularProducts(3).then(setPopularProducts).catch(console.error)
+  }, [])
 
   useGSAP(() => {
     const tl = gsap.timeline()
@@ -40,6 +47,32 @@ export default function HomePage() {
       opacity: 0,
       y: 20,
       duration: 1.5,
+      ease: "power2.out"
+    })
+
+    // Popular Products Grid Stagger
+    gsap.from("#popular-grid > div", {
+      scrollTrigger: {
+        trigger: "#popular-grid",
+        start: "top 85%",
+      },
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      stagger: 0.15,
+      ease: "power2.out"
+    })
+
+    // Testimonials Stagger
+    gsap.from("#testimonials-grid > div", {
+      scrollTrigger: {
+        trigger: "#testimonials-grid",
+        start: "top 85%",
+      },
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      stagger: 0.2,
       ease: "power2.out"
     })
 
@@ -83,6 +116,70 @@ export default function HomePage() {
             <span className="font-caption text-[11px] text-on-surface-variant uppercase tracking-[0.2em]">Scroll to Descend</span>
             <div className="w-[1px] h-8 bg-outline-variant relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-full bg-primary -translate-y-full" id="scroll-line"></div>
+            </div>
+          </div>
+        </section>
+
+        {/* Popular Artifacts Section */}
+        <section className="py-xl bg-surface">
+          <div className="max-w-container-max mx-auto px-gutter">
+            <div className="flex flex-col items-center mb-xl text-center">
+              <span className="font-label-sm text-[10px] text-primary uppercase tracking-[0.4em] mb-base">Featured</span>
+              <h3 className="font-headline-xl text-[24px] text-on-surface">Popular Artifacts</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-lg" id="popular-grid">
+              {popularProducts.length > 0 ? (
+                popularProducts.map((product) => (
+                  <div key={product.id} className="group flex flex-col gap-base">
+                    <div className="aspect-[3/4] bg-surface-container overflow-hidden relative border border-outline-variant/10">
+                      <Link href={`/shop/${product.id}`}>
+                        <img className="w-full h-full object-cover filter grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src={product.images?.[0] || ''} alt={product.name} />
+                      </Link>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="font-body-md text-[13px] text-on-surface">{product.name}</p>
+                        <p className="font-caption text-[11px] text-on-surface-variant">${product.price.toFixed(2)}</p>
+                      </div>
+                      <Link href={`/shop/${product.id}`} className="font-label-sm text-[10px] text-primary uppercase tracking-widest border-b border-primary/30 pb-[2px] hover:border-primary">View Details</Link>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="md:col-span-3 text-center text-on-surface-variant text-[13px] h-[300px] flex items-center justify-center">
+                  <span className="opacity-50">Curating our most loved artifacts...</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Sanctuary Voices (Testimonials) Section */}
+        <section className="py-xl bg-surface-container-lowest border-y border-outline-variant/20">
+          <div className="max-w-container-max mx-auto px-gutter">
+            <div className="flex flex-col items-center mb-xl text-center">
+              <span className="font-label-sm text-[10px] text-primary uppercase tracking-[0.4em] mb-base">Testimonials</span>
+              <h3 className="font-headline-xl text-[24px] text-on-surface">Sanctuary Voices</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl" id="testimonials-grid">
+              {/* Testimonial 1 */}
+              <div className="flex flex-col items-center text-center space-y-md">
+                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
+                <p className="font-body-lg text-[14px] text-on-surface italic">"A moment of stillness in a vessel. The craftsmanship is profoundly grounding."</p>
+                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— E.R., Kyoto</span>
+              </div>
+              {/* Testimonial 2 */}
+              <div className="flex flex-col items-center text-center space-y-md">
+                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
+                <p className="font-body-lg text-[14px] text-on-surface italic">"Quiet luxury defined. It transforms my daily rituals into sacred pauses."</p>
+                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— M.T., London</span>
+              </div>
+              {/* Testimonial 3 */}
+              <div className="flex flex-col items-center text-center space-y-md hidden lg:flex">
+                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
+                <p className="font-body-lg text-[14px] text-on-surface italic">"The texture alone tells a story of ancient techniques brought to modern spaces."</p>
+                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— A.L., New York</span>
+              </div>
             </div>
           </div>
         </section>

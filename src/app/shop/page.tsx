@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState, useMemo } from 'react'
+import { useEffect, useRef, useState, useMemo, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -20,18 +21,27 @@ interface Product {
   slug: string
 }
 
-export default function ShopPage() {
+function ShopContent() {
   const container = useRef<HTMLDivElement>(null)
+  const searchParams = useSearchParams()
+  const categoryQuery = searchParams.get('category')
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
   
   // States for search, filter, sort, and pagination
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryQuery)
   const [sortBy, setSortBy] = useState<'newest' | 'price-asc' | 'price-desc'>('newest')
   const [isSortOpen, setIsSortOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 6
+
+  useEffect(() => {
+    if (categoryQuery) {
+      setSelectedCategory(categoryQuery)
+      setCurrentPage(1)
+    }
+  }, [categoryQuery])
 
   useEffect(() => {
     fetch('/api/products')
@@ -293,5 +303,13 @@ export default function ShopPage() {
         </section>
       </div>
     </StorefrontLayout>
+  )
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-on-surface-variant font-caption text-[11px] uppercase tracking-widest">Loading...</div>}>
+      <ShopContent />
+    </Suspense>
   )
 }
