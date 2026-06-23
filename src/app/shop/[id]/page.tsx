@@ -37,7 +37,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const container = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const [product, setProduct] = useState<Product | null>(null)
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingRelated, setIsLoadingRelated] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const [isAdding, setIsAdding] = useState(false)
   const [activeImageIdx, setActiveImageIdx] = useState(0)
@@ -56,6 +58,28 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         setIsLoading(false)
       })
   }, [productId])
+
+  useEffect(() => {
+    if (product?.category) {
+      setIsLoadingRelated(true)
+      // Fetch all products and filter client-side to avoid Firestore composite index errors
+      fetch(`/api/products`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            const publishedAndRelated = data.data
+              .filter((p: any) => p.visibility === 'published' && p.category === product.category && p.id !== product.id)
+              .slice(0, 4)
+            setRelatedProducts(publishedAndRelated)
+          }
+          setIsLoadingRelated(false)
+        })
+        .catch(err => {
+          console.error('Failed to fetch related products', err)
+          setIsLoadingRelated(false)
+        })
+    }
+  }, [product?.category, product?.id])
 
   useGSAP(() => {
     if (isLoading || !product) return;
@@ -88,6 +112,29 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
     return () => observer.disconnect()
   }, { scope: container, dependencies: [isLoading, product] })
+
+  useGSAP(() => {
+    if (isLoadingRelated || relatedProducts.length === 0) return;
+
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-4');
+        }
+      });
+    }, observerOptions);
+
+    const relatedCards = container.current?.querySelectorAll('.related-card');
+    relatedCards?.forEach((card, i) => {
+      card.classList.add('opacity-0', 'translate-y-4');
+      (card as HTMLElement).style.transitionDelay = `${i * 100}ms`;
+      observer.observe(card);
+    });
+
+    return () => observer.disconnect()
+  }, { scope: container, dependencies: [isLoadingRelated, relatedProducts] })
 
   const handleAddToCart = async () => {
     if (!product) return;
@@ -288,6 +335,46 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           </div>
         </section>
 
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <section className="max-w-container-max mx-auto px-gutter pb-xl pt-lg border-t border-outline-variant/20 mt-xl">
+            <div className="mb-lg flex items-end justify-between">
+              <div>
+                <h2 className="font-mono text-[14px] uppercase tracking-[0.3em] text-on-surface mb-xs">
+                  Related Artifacts
+                </h2>
+                <p className="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest opacity-60">
+                  More from {product.category || 'this collection'}
+                </p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
+              {relatedProducts.map((relatedProduct) => (
+                <div key={relatedProduct.id} className="related-card group relative bg-surface-container-lowest overflow-hidden transition-all duration-500">
+                  <div className="aspect-[3/4] relative overflow-hidden bg-surface-container">
+                    <img 
+                      alt={relatedProduct.name} 
+                      className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" 
+                      src={(relatedProduct as any).image || relatedProduct.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"} 
+                    />
+                    <div className="overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                      <Link href={`/shop/${relatedProduct.id}`}>
+                        <button className="border border-primary/50 text-primary px-lg py-sm font-mono text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500">
+                          View Details
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="p-md text-center">
+                    <h4 className="font-mono text-[12px] tracking-tight mb-xs uppercase opacity-90">{relatedProduct.name}</h4>
+                    <p className="font-mono text-[10px] tracking-widest text-primary">LKR {relatedProduct.price?.toLocaleString()}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
       </div>
     </StorefrontLayout>

@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/auth-context'
+import Header from '@/components/storefront/Header'
+import BottomNav from '@/components/storefront/BottomNav'
 
 interface AuthError {
   title: string
@@ -165,6 +167,7 @@ export default function LoginPage() {
 
   return (
     <div className="font-mono text-[13px] antialiased">
+      <Header />
       <style dangerouslySetInnerHTML={{ __html: `
         .blur-backdrop {
           backdrop-filter: blur(40px) brightness(0.6);
@@ -451,6 +454,7 @@ export default function LoginPage() {
 
       {/* Subtle Grain Overlay */}
       <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      <BottomNav />
     </div>
   )
 }

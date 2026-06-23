@@ -96,10 +96,10 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden" id="hero">
           <div className="absolute inset-0 z-0">
-            <img 
-              className="w-full h-full object-cover opacity-50 scale-110" 
-              id="hero-img" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrawEcq7BOXMc2OfCUGAVspe9tUXW0MQNBRhQke_bGBY63vcO00q2VEGKsy8LqNiRthCjKab7-xO_JPcBORXeymTAKgCcx5imI9SujgJCryq_BBh4Q4BAwWFDspIF4BYWVD0TYqi73vwgwzQHOxyBxtgVCPBGF5mpwq_XASL78ramudBbcmFAzqGh6EcSI7PzolFRN78-XTrHTaFlgWGtKDPyEhNoV9eZKsMgJryClIUQE0fZiO6GA4Dl3UGzvih1ZrE2hWVTm6Eb" 
+            <img
+              className="w-full h-full object-cover  opacity-50 scale-110"
+              id="hero-img"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrawEcq7BOXMc2OfCUGAVspe9tUXW0MQNBRhQke_bGBY63vcO00q2VEGKsy8LqNiRthCjKab7-xO_JPcBORXeymTAKgCcx5imI9SujgJCryq_BBh4Q4BAwWFDspIF4BYWVD0TYqi73vwgwzQHOxyBxtgVCPBGF5mpwq_XASL78ramudBbcmFAzqGh6EcSI7PzolFRN78-XTrHTaFlgWGtKDPyEhNoV9eZKsMgJryClIUQE0fZiO6GA4Dl3UGzvih1ZrE2hWVTm6Eb"
               alt="Hero image"
             />
             <div className="hero-gradient absolute inset-0"></div>
@@ -194,7 +194,7 @@ export default function HomePage() {
               <Link className="inline-block font-label-sm text-[10px] text-primary uppercase tracking-widest border-b border-primary/30 pb-xs hover:border-primary" href="/about">Read the Manifesto</Link>
             </div>
             <div className="md:col-span-7 relative h-[500px] overflow-hidden" id="philosophy-image">
-              <img className="w-full h-full object-cover filter grayscale opacity-70 hover:opacity-100 hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRrYGvzKrfe8EXKLztfoYQ8oYA0RC5rIsJp0QI-1fd--0ct_NoRdXlwBgX6KSrn2N66cvvp5EhQW6Pe-Fx0DZz1Zv5Ur4ExXRkMNz6SogstRggSebvpxZ_wfBIvLMi9U4ChoeT810y86VMDFlxEwINjMECGzL_GHC3OyA7XElS2WzyxCD_U-WpUVEyQeswLJ6RmbJy9mQRJ9Q5bywudF-xpNiLmFIzxj5aOq4Sy9pNox39cU2sHbtlWr8KzmpX9_LI_4enOPl56Xuu" alt="Philosophy image"/>
+              <img className="w-full h-full object-cover filter grayscale opacity-70 hover:opacity-100 hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRrYGvzKrfe8EXKLztfoYQ8oYA0RC5rIsJp0QI-1fd--0ct_NoRdXlwBgX6KSrn2N66cvvp5EhQW6Pe-Fx0DZz1Zv5Ur4ExXRkMNz6SogstRggSebvpxZ_wfBIvLMi9U4ChoeT810y86VMDFlxEwINjMECGzL_GHC3OyA7XElS2WzyxCD_U-WpUVEyQeswLJ6RmbJy9mQRJ9Q5bywudF-xpNiLmFIzxj5aOq4Sy9pNox39cU2sHbtlWr8KzmpX9_LI_4enOPl56Xuu" alt="Philosophy image" />
               <div className="absolute inset-0 border border-outline-variant/20 pointer-events-none"></div>
             </div>
           </div>
