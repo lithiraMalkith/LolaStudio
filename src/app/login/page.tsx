@@ -59,7 +59,7 @@ export default function LoginPage() {
   const [forgotLoading, setForgotLoading] = useState(false)
   const [forgotMessage, setForgotMessage] = useState<string | null>(null)
   const [forgotError, setForgotError] = useState<string | null>(null)
-  
+
   const { signInWithEmail, signInWithGoogle, signOut } = useAuth()
   const router = useRouter()
 
@@ -168,7 +168,8 @@ export default function LoginPage() {
   return (
     <div className="font-mono text-[13px] antialiased">
       <Header />
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .blur-backdrop {
           backdrop-filter: blur(40px) brightness(0.6);
           -webkit-backdrop-filter: blur(40px) brightness(0.6);
@@ -197,23 +198,23 @@ export default function LoginPage() {
 
       {/* Background Layer */}
       <div className="fixed inset-0 z-0">
-        <img 
-          alt="Sanctuary Background" 
-          className="w-full h-full object-cover scale-110 blur-sm" 
-          src="https://lh3.googleusercontent.com/aida/AP1WRLs8gi6dgY_C5K43J0nP--2Zst__xTmjoDpKr7LQDqhN5CgIuUEAmt8s0yRN9pfPcv9pnTuT0lnuyAkKkFsYUONuCmX6vLQga4vLSWFUCj2ESPiFZIKUNCV_cxrYiq6ZlN-L_gQMw_5KHXABYCEwnE26JR0j7VFwAT3AI80wdHIHPnG4_naIkGTUcDnMPp0hjPi1kQsFbJThTVXoi0lokvhYMtMv3iz8_jkXv8zWVfnJLjubB6aZg_J_Vs-f"
+        <img
+          alt="Sanctuary Background"
+          className="w-full h-full object-cover scale-110 blur-xl"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrawEcq7BOXMc2OfCUGAVspe9tUXW0MQNBRhQke_bGBY63vcO00q2VEGKsy8LqNiRthCjKab7-xO_JPcBORXeymTAKgCcx5imI9SujgJCryq_BBh4Q4BAwWFDspIF4BYWVD0TYqi73vwgwzQHOxyBxtgVCPBGF5mpwq_XASL78ramudBbcmFAzqGh6EcSI7PzolFRN78-XTrHTaFlgWGtKDPyEhNoV9eZKsMgJryClIUQE0fZiO6GA4Dl3UGzvih1ZrE2hWVTm6Eb"
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
       {/* Main Content Container */}
       <main className="relative z-10 min-h-screen flex items-center justify-center px-6 py-16">
-        
+
         {/* Login Card */}
         <div className="w-full max-w-[420px] bg-[#1c1c19]/80 blur-backdrop border border-[#4d4637]/20 p-8 shadow-2xl relative overflow-hidden group">
-          
+
           {/* Subtle Gold Accent at Top */}
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#e6c364]/50 to-transparent"></div>
-          
+
           {/* Branding */}
           <div className="flex flex-col items-center mb-8">
             <h1 className="font-mono text-2xl text-[#e6c364] tracking-[0.3em] mb-1 font-medium">LOLA STUDIO</h1>
@@ -254,12 +255,12 @@ export default function LoginPage() {
                     <label className="font-mono text-[10px] text-[#d0c5b2]/60 uppercase tracking-widest focus-within:text-[#e6c364] transition-premium">
                       Email Address
                     </label>
-                    <input 
+                    <input
                       type="email"
                       value={forgotEmail}
                       onChange={(e) => setForgotEmail(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0" 
-                      placeholder="name@domain.com" 
+                      className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0"
+                      placeholder="name@domain.com"
                       required
                       disabled={forgotLoading}
                       autoFocus
@@ -267,7 +268,7 @@ export default function LoginPage() {
                   </div>
 
                   <div className="pt-2">
-                    <button 
+                    <button
                       type="submit"
                       disabled={forgotLoading}
                       className="w-full bg-[#e6c364]/90 py-2 px-8 text-[#3d2e00] font-mono text-[11px] uppercase tracking-[0.3em] hover:bg-[#e6c364] transition-premium active:scale-[0.99] disabled:opacity-50 flex justify-center items-center h-10"
@@ -286,8 +287,8 @@ export default function LoginPage() {
               )}
 
               <div className="text-center pt-2">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   onClick={(e) => { e.preventDefault(); closeForgotPassword(); }}
                   className="font-mono text-[11px] text-[#e6c364]/60 hover:text-[#e6c364] transition-premium"
                 >
@@ -299,7 +300,7 @@ export default function LoginPage() {
             <>
               {/* Social Login */}
               <div className="space-y-3 mb-8">
-                <button 
+                <button
                   onClick={handleGoogleAuth}
                   disabled={isLoading}
                   className="w-full flex items-center justify-center gap-2 py-2 px-5 border border-[#4d4637]/30 bg-[#20201d]/50 hover:bg-[#2a2a27] transition-premium text-[#e5e2dd] group disabled:opacity-50"
@@ -361,12 +362,12 @@ export default function LoginPage() {
                     <label className="font-mono text-[10px] text-[#d0c5b2]/60 uppercase tracking-widest focus-within:text-[#e6c364] transition-premium">
                       Full Name
                     </label>
-                    <input 
+                    <input
                       type="text"
                       value={displayName}
                       onChange={(e) => setDisplayName(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0" 
-                      placeholder="Jane Doe" 
+                      className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0"
+                      placeholder="Jane Doe"
                       required={!isLogin}
                       disabled={isLoading}
                     />
@@ -377,12 +378,12 @@ export default function LoginPage() {
                   <label className="font-mono text-[10px] text-[#d0c5b2]/60 uppercase tracking-widest focus-within:text-[#e6c364] transition-premium">
                     Email Address
                   </label>
-                  <input 
+                  <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0" 
-                    placeholder="name@domain.com" 
+                    className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0"
+                    placeholder="name@domain.com"
                     required
                     disabled={isLoading}
                   />
@@ -399,19 +400,19 @@ export default function LoginPage() {
                       </a>
                     )}
                   </div>
-                  <input 
+                  <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0" 
-                    placeholder="••••••••" 
+                    className="w-full bg-transparent border-0 border-b border-[#4d4637]/40 py-1 px-0 text-[#e5e2dd] placeholder:text-[#d0c5b2]/20 input-gold-focus transition-premium text-[13px] focus:ring-0"
+                    placeholder="••••••••"
                     required
                     disabled={isLoading}
                   />
                 </div>
 
                 <div className="pt-2">
-                  <button 
+                  <button
                     type="submit"
                     disabled={isLoading}
                     className="w-full bg-[#e6c364]/90 py-2 px-8 text-[#3d2e00] font-mono text-[11px] uppercase tracking-[0.3em] hover:bg-[#e6c364] transition-premium active:scale-[0.99] disabled:opacity-50 flex justify-center items-center h-10"
@@ -432,8 +433,8 @@ export default function LoginPage() {
               <div className="mt-8 text-center">
                 <p className="font-mono text-[11px] text-[#d0c5b2]/60">
                   {isLogin ? 'New to Lola Studio? ' : 'Already have an account? '}
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     onClick={toggleMode}
                     className="text-[#e6c364] ml-1 relative gold-underline-hover inline-block"
                   >
@@ -452,8 +453,7 @@ export default function LoginPage() {
         </div>
       </main>
 
-      {/* Subtle Grain Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      {/* Subtle Grain Overlay Removed */}
       <BottomNav />
     </div>
   )
