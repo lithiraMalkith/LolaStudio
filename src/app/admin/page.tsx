@@ -33,26 +33,7 @@ import {
   Legend,
 } from 'recharts'
 
-// Mock data for charts
-const revenueData = [
-  { day: 'Mon', revenue: 45000, target: 50000 },
-  { day: 'Tue', revenue: 52000, target: 50000 },
-  { day: 'Wed', revenue: 48000, target: 50000 },
-  { day: 'Thu', revenue: 61000, target: 50000 },
-  { day: 'Fri', revenue: 55000, target: 50000 },
-  { day: 'Sat', revenue: 67000, target: 50000 },
-  { day: 'Sun', revenue: 42000, target: 50000 },
-]
 
-const ordersData = [
-  { day: 'Mon', orders: 12, completed: 10 },
-  { day: 'Tue', orders: 15, completed: 13 },
-  { day: 'Wed', orders: 14, completed: 12 },
-  { day: 'Thu', orders: 18, completed: 17 },
-  { day: 'Fri', orders: 16, completed: 14 },
-  { day: 'Sat', orders: 20, completed: 19 },
-  { day: 'Sun', orders: 12, completed: 11 },
-]
 
 export default function AdminDashboard() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -74,16 +55,21 @@ export default function AdminDashboard() {
         console.error('Failed to fetch dashboard stats:', error)
         // Fallback to demo data
         setStats({
-          ordersToday: 12,
-          ordersThisWeek: 47,
-          ordersThisMonth: 186,
-          revenueToday: 24500,
-          revenueThisWeek: 142800,
-          revenueThisMonth: 567200,
-          pendingOrders: 8,
-          lowStockProducts: 3,
-          totalProducts: 42,
-          totalCustomers: 234,
+          ordersToday: 0,
+          ordersThisWeek: 0,
+          ordersThisMonth: 0,
+          revenueToday: 0,
+          revenueThisWeek: 0,
+          revenueThisMonth: 0,
+          pendingOrders: 0,
+          lowStockProducts: 0,
+          totalProducts: 0,
+          totalCustomers: 0,
+          revenueData: [],
+          ordersData: [],
+          recentActivities: [],
+          revenueTrend: 0,
+          ordersTrend: 0,
         })
       } finally {
         setLoading(false)
@@ -209,7 +195,7 @@ export default function AdminDashboard() {
       icon: <DollarSign className="w-5 h-5" />,
       color: 'text-brand-gold',
       bgColor: 'bg-brand-gold/10',
-      trend: '+18%',
+      trend: stats ? `${stats.revenueTrend >= 0 ? '+' : ''}${stats.revenueTrend}%` : undefined,
     },
     {
       label: 'Orders Today',
@@ -218,7 +204,7 @@ export default function AdminDashboard() {
       icon: <ShoppingCart className="w-5 h-5" />,
       color: 'text-brand-gold',
       bgColor: 'bg-brand-gold/10',
-      trend: '+5',
+      trend: stats ? `${stats.ordersTrend >= 0 ? '+' : ''}${stats.ordersTrend}` : undefined,
     },
     {
       label: 'Pending Orders',
@@ -254,14 +240,7 @@ export default function AdminDashboard() {
     },
   ]
 
-  const recentActivity = [
-    { id: '1', type: 'order' as const, message: 'New order #LS-4K2A received — LKR 4,200', time: '2 min ago' },
-    { id: '2', type: 'order' as const, message: 'Order #LS-3R1B marked as Dispatched', time: '15 min ago' },
-    { id: '3', type: 'product' as const, message: 'Gold Buddha Statue stock updated to 5 units', time: '1 hr ago' },
-    { id: '4', type: 'order' as const, message: 'Order #LS-2T5M delivered successfully', time: '2 hrs ago' },
-    { id: '5', type: 'user' as const, message: 'New customer registration — Kamal Perera', time: '3 hrs ago' },
-    { id: '6', type: 'product' as const, message: 'Lotus Incense Holder published to store', time: '4 hrs ago' },
-  ]
+  const recentActivity = stats?.recentActivities || []
 
   const quickActions = [
     { label: 'New Product', href: '/admin/products/new', icon: <Package className="w-5 h-5" /> },
@@ -327,10 +306,10 @@ export default function AdminDashboard() {
                   {stat.icon}
                 </div>
               </div>
-              {stat.trend && (
+              {stat.trend && stat.trend !== '+0%' && stat.trend !== '+0' && (
                 <div className="flex items-center gap-1 mt-3">
-                  <ArrowUpRight className="w-3.5 h-3.5 text-brand-success" />
-                  <span className="text-xs text-brand-success font-medium">{stat.trend}</span>
+                  <ArrowUpRight className={`w-3.5 h-3.5 ${stat.trend.startsWith('-') ? 'text-brand-danger rotate-90' : 'text-brand-success'}`} />
+                  <span className={`text-xs font-medium ${stat.trend.startsWith('-') ? 'text-brand-danger' : 'text-brand-success'}`}>{stat.trend}</span>
                 </div>
               )}
             </div>
@@ -351,7 +330,7 @@ export default function AdminDashboard() {
             </span>
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={revenueData}>
+            <LineChart data={stats?.revenueData || []}>
               <CartesianGrid strokeDasharray="3 3" stroke="#2A2A2A" />
               <XAxis dataKey="day" stroke="#6B6B6B" style={{ fontSize: '12px' }} />
               <YAxis stroke="#6B6B6B" style={{ fontSize: '12px' }} />
@@ -363,7 +342,7 @@ export default function AdminDashboard() {
                   padding: '8px 12px',
                 }}
                 labelStyle={{ color: '#C9A84C', fontWeight: 'bold' }}
-                formatter={(value: any) => `LKR ${(value || 0).toLocaleString()}`}
+                formatter={(value) => `LKR ${(Number(value) || 0).toLocaleString()}`}
               />
               <Legend wrapperStyle={{ color: '#6B6B6B' }} />
               <Line
@@ -374,15 +353,6 @@ export default function AdminDashboard() {
                 dot={{ fill: '#C9A84C', r: 5 }}
                 activeDot={{ r: 7, fill: '#E8B86D' }}
                 name="Revenue (LKR)"
-              />
-              <Line
-                type="monotone"
-                dataKey="target"
-                stroke="#6B6B6B"
-                strokeWidth={2}
-                strokeDasharray="5 5"
-                dot={false}
-                name="Target"
               />
             </LineChart>
           </ResponsiveContainer>
@@ -398,7 +368,7 @@ export default function AdminDashboard() {
             </span>
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={ordersData}>
+            <BarChart data={stats?.ordersData || []}>
               <CartesianGrid strokeDasharray="3 3" stroke="#2A2A2A" />
               <XAxis dataKey="day" stroke="#6B6B6B" style={{ fontSize: '12px' }} />
               <YAxis stroke="#6B6B6B" style={{ fontSize: '12px' }} />
@@ -467,7 +437,10 @@ export default function AdminDashboard() {
         <div className="lg:col-span-2 bg-brand-surface rounded-xl border border-brand-border p-6">
           <h2 className="text-sm font-semibold text-brand-text mb-5">Recent Activity</h2>
           <div className="space-y-3 max-h-96 overflow-y-auto">
-            {recentActivity.slice(0, 5).map((activity) => (
+            {recentActivity.length === 0 && (
+              <p className="text-xs text-brand-muted py-4 text-center">No recent activity</p>
+            )}
+            {recentActivity.slice(0, 8).map((activity) => (
               <div
                 key={activity.id}
                 className="activity-item flex items-start gap-3 py-3 px-3 rounded-lg hover:bg-brand-gold/5 transition-colors"

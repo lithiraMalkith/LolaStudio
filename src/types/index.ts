@@ -144,6 +144,24 @@ export interface Customer {
 }
 
 // --- Dashboard ---
+export interface RevenueDataPoint {
+  day: string
+  revenue: number
+}
+
+export interface OrdersDataPoint {
+  day: string
+  orders: number
+  completed: number
+}
+
+export interface ActivityItem {
+  id: string
+  type: 'order' | 'product' | 'user'
+  message: string
+  time: string
+}
+
 export interface DashboardStats {
   ordersToday: number
   ordersThisWeek: number
@@ -155,6 +173,14 @@ export interface DashboardStats {
   lowStockProducts: number
   totalProducts: number
   totalCustomers: number
+  // Chart data
+  revenueData: RevenueDataPoint[]
+  ordersData: OrdersDataPoint[]
+  // Activity feed
+  recentActivities: ActivityItem[]
+  // Trend indicators
+  revenueTrend: number   // % change vs yesterday
+  ordersTrend: number    // absolute change vs yesterday
 }
 
 export interface ActivityEntry {

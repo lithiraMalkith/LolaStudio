@@ -139,7 +139,7 @@ export default function HomePage() {
                     <div className="flex justify-between items-center">
                       <div>
                         <p className="font-body-md text-[13px] text-on-surface">{product.name}</p>
-                        <p className="font-caption text-[11px] text-on-surface-variant">${product.price.toFixed(2)}</p>
+                        <p className="font-caption text-[11px] text-on-surface-variant">Rs.{product.price.toFixed(2)}</p>
                       </div>
                       <Link href={`/shop/${product.id}`} className="font-label-sm text-[10px] text-primary uppercase tracking-widest border-b border-primary/30 pb-[2px] hover:border-primary">View Details</Link>
                     </div>

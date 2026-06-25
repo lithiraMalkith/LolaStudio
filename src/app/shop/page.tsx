@@ -27,7 +27,7 @@ function ShopContent() {
   const categoryQuery = searchParams.get('category')
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  
+
   // States for search, filter, sort, and pagination
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryQuery)
@@ -70,8 +70,8 @@ function ShopContent() {
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim()
-      filtered = filtered.filter(p => 
-        p.name.toLowerCase().includes(q) || 
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(q) ||
         (p.category && p.category.toLowerCase().includes(q))
       )
     }
@@ -87,7 +87,7 @@ function ShopContent() {
 
   // Pagination logic
   const totalPages = Math.ceil(processedProducts.length / itemsPerPage)
-  
+
   useEffect(() => {
     // Reset to page 1 if current page is out of bounds after filtering
     if (currentPage > totalPages && totalPages > 0) {
@@ -105,19 +105,19 @@ function ShopContent() {
 
     const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('opacity-100');
-                entry.target.classList.remove('opacity-0', 'translate-y-4');
-            }
-        });
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100');
+          entry.target.classList.remove('opacity-0', 'translate-y-4');
+        }
+      });
     }, observerOptions);
 
     const cards = container.current?.querySelectorAll('.product-card');
     cards?.forEach((card, i) => {
-        card.classList.add('opacity-0', 'translate-y-4');
-        (card as HTMLElement).style.transitionDelay = `${i * 50}ms`;
-        observer.observe(card);
+      card.classList.add('opacity-0', 'translate-y-4');
+      (card as HTMLElement).style.transitionDelay = `${i * 50}ms`;
+      observer.observe(card);
     });
 
     return () => observer.disconnect()
@@ -142,12 +142,12 @@ function ShopContent() {
           <div className="mb-lg">
             <h3 className="font-label-sm text-[10px] text-primary uppercase mb-md tracking-[0.2em] opacity-80">Search</h3>
             <div className="relative">
-              <input 
+              <input
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-transparent border-0 border-b border-outline-variant/30 py-2 px-0 text-body-md focus:ring-0 focus:border-primary placeholder:text-on-surface-variant/30 uppercase font-caption text-[10px] transition-all duration-500" 
-                placeholder="FIND ARTISANRY..." 
-                type="text" 
+                className="w-full bg-transparent border-0 border-b border-outline-variant/30 py-2 px-0 text-body-md focus:ring-0 focus:border-primary placeholder:text-on-surface-variant/30 uppercase font-caption text-[10px] transition-all duration-500"
+                placeholder="FIND ARTISANRY..."
+                type="text"
               />
             </div>
           </div>
@@ -155,7 +155,7 @@ function ShopContent() {
             <h3 className="font-label-sm text-[10px] text-primary uppercase mb-md tracking-[0.2em] opacity-80">Categories</h3>
             <ul className="space-y-xs">
               <li>
-                <button 
+                <button
                   onClick={() => handleCategoryClick(null)}
                   className={`font-headline-md text-[13px] ${!selectedCategory ? 'text-primary border-l border-primary pl-4' : 'text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5'} w-full text-left transition-all duration-500`}
                 >
@@ -163,7 +163,7 @@ function ShopContent() {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => handleCategoryClick('Spiritual & Zen')}
                   className={`font-headline-md text-[13px] ${selectedCategory === 'Spiritual & Zen' ? 'text-primary border-l border-primary pl-4' : 'text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5'} w-full text-left transition-all duration-500`}
                 >
@@ -171,7 +171,7 @@ function ShopContent() {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => handleCategoryClick('Home Decor')}
                   className={`font-headline-md text-[13px] ${selectedCategory === 'Home Decor' ? 'text-primary border-l border-primary pl-4' : 'text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5'} w-full text-left transition-all duration-500`}
                 >
@@ -179,7 +179,7 @@ function ShopContent() {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => handleCategoryClick('Gift Sets')}
                   className={`font-headline-md text-[13px] ${selectedCategory === 'Gift Sets' ? 'text-primary border-l border-primary pl-4' : 'text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5'} w-full text-left transition-all duration-500`}
                 >
@@ -207,14 +207,14 @@ function ShopContent() {
             </div>
             <div className="flex gap-md items-center font-label-sm text-[10px] text-on-surface-variant uppercase tracking-[0.15em] relative">
               <span className="opacity-40">Sort:</span>
-              <button 
+              <button
                 onClick={() => setIsSortOpen(!isSortOpen)}
                 className="text-primary flex items-center gap-1 hover:opacity-70 transition-all duration-500"
               >
                 {sortOptions.find(o => o.value === sortBy)?.label}
                 <span className="material-symbols-outlined text-[14px]">expand_more</span>
               </button>
-              
+
               {isSortOpen && (
                 <div className="absolute right-0 top-full mt-2 bg-surface-container-lowest border border-outline-variant/20 py-2 min-w-[160px] z-20 shadow-xl">
                   {sortOptions.map((option) => (
@@ -234,17 +234,17 @@ function ShopContent() {
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-md">
             {isLoading ? (
-              Array.from({length: itemsPerPage}).map((_, n) => (
+              Array.from({ length: itemsPerPage }).map((_, n) => (
                 <div key={n} className="aspect-[3/4] bg-surface-container/50 animate-pulse"></div>
               ))
             ) : paginatedProducts.length > 0 ? (
               paginatedProducts.map((product) => (
                 <div key={product.id} className="product-card group relative bg-surface-container-lowest overflow-hidden transition-all duration-500">
                   <div className="aspect-[3/4] relative overflow-hidden bg-surface-container">
-                    <img 
-                      alt={product.name} 
-                      className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" 
-                      src={(product as any).image || product.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"} 
+                    <img
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
+                      src={(product as any).image || product.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"}
                     />
                     <div className="overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                       <Link href={`/shop/${product.id}`}>
@@ -256,7 +256,7 @@ function ShopContent() {
                   </div>
                   <div className="p-md text-center">
                     <h4 className="font-headline-md text-[13px] tracking-[0.05em] mb-xs uppercase opacity-90">{product.name}</h4>
-                    <p className="font-label-sm text-[10px] tracking-[0.15em] text-primary">${product.price?.toFixed(2)}</p>
+                    <p className="font-label-sm text-[10px] tracking-[0.15em] text-primary">Rs.{product.price?.toFixed(2)}</p>
                     <div className="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-all duration-500">
                       <span className="text-caption font-caption text-[11px] text-on-surface-variant uppercase tracking-tighter">
                         {product.category || 'Handmade Artifact'}
@@ -273,7 +273,7 @@ function ShopContent() {
           {/* Pagination */}
           {!isLoading && totalPages > 1 && (
             <div className="mt-xl flex justify-center gap-lg items-center">
-              <button 
+              <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
                 className="text-on-surface-variant hover:text-primary transition-all duration-500 disabled:opacity-30 disabled:hover:text-on-surface-variant"
@@ -282,7 +282,7 @@ function ShopContent() {
               </button>
               <div className="flex gap-md font-label-sm text-[10px]">
                 {Array.from({ length: totalPages }).map((_, i) => (
-                  <span 
+                  <span
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
                     className={`cursor-pointer transition-all duration-500 ${currentPage === i + 1 ? 'text-primary border-b border-primary pb-xs' : 'text-on-surface-variant hover:text-primary'}`}
@@ -291,7 +291,7 @@ function ShopContent() {
                   </span>
                 ))}
               </div>
-              <button 
+              <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
                 className="text-on-surface-variant hover:text-primary transition-all duration-500 disabled:opacity-30 disabled:hover:text-on-surface-variant"
