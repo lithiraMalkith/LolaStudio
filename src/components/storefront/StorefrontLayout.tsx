@@ -1,6 +1,9 @@
+'use client'
+
 import Header from './Header'
 import Footer from './Footer'
 import BottomNav from './BottomNav'
+import ToastProvider from './Toast'
 
 export default function StorefrontLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +14,7 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
       </main>
       <Footer />
       <BottomNav />
+      <ToastProvider />
     </div>
   )
 }

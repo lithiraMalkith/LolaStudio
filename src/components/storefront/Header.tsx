@@ -37,12 +37,12 @@ export default function Header() {
           </h1>
         </Link>
         
-        <div className="flex items-center gap-md">
-          <Link href="/cart" className="text-primary hover:text-primary-fixed hover:scale-110 transition-transform">
-            <span className="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+        <div className="flex items-center gap-sm">
+          <Link href="/cart" className="flex items-center justify-center w-10 h-10 text-primary hover:text-primary-fixed hover:scale-110 transition-transform">
+            <span className="material-symbols-outlined text-[22px]" data-icon="shopping_bag">shopping_bag</span>
           </Link>
-          <Link href="/account" className="text-primary hover:text-primary-fixed hover:scale-110 transition-transform">
-            <span className="material-symbols-outlined" data-icon="person">person</span>
+          <Link href="/account" className="flex items-center justify-center w-10 h-10 text-primary hover:text-primary-fixed hover:scale-110 transition-transform">
+            <span className="material-symbols-outlined text-[22px]" data-icon="person">person</span>
           </Link>
         </div>
       </div>

@@ -3,10 +3,15 @@
 import { useEffect, useRef, useState, useMemo, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import StorefrontLayout from '@/components/storefront/StorefrontLayout'
+import { formatPrice } from '@/lib/formatPrice'
+import { showToast } from '@/components/storefront/Toast'
+import { getAuth } from 'firebase/auth'
+import app from '@/lib/firebase'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -23,10 +28,12 @@ interface Product {
 
 function ShopContent() {
   const container = useRef<HTMLDivElement>(null)
+  const router = useRouter()
   const searchParams = useSearchParams()
   const categoryQuery = searchParams.get('category')
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [addingToCart, setAddingToCart] = useState<string | null>(null)
 
   // States for search, filter, sort, and pagination
   const [searchQuery, setSearchQuery] = useState('')
@@ -59,6 +66,70 @@ function ShopContent() {
         setIsLoading(false)
       })
   }, [])
+
+  const handleAddToCart = async (productId: string) => {
+    setAddingToCart(productId)
+    try {
+      const auth = getAuth(app)
+      const user = auth.currentUser
+      if (!user) {
+        router.push('/login')
+        return
+      }
+      const token = await user.getIdToken()
+      const res = await fetch('/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ productId, quantity: 1 })
+      })
+      const data = await res.json()
+      if (data.success) {
+        showToast('Added to sanctuary')
+      } else {
+        showToast('Failed to add to cart', 'error')
+      }
+    } catch (err) {
+      console.error(err)
+      showToast('An error occurred', 'error')
+    } finally {
+      setAddingToCart(null)
+    }
+  }
+
+  const handleBuyNow = async (productId: string) => {
+    setAddingToCart(productId)
+    try {
+      const auth = getAuth(app)
+      const user = auth.currentUser
+      if (!user) {
+        router.push('/login')
+        return
+      }
+      const token = await user.getIdToken()
+      const res = await fetch('/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ productId, quantity: 1 })
+      })
+      const data = await res.json()
+      if (data.success) {
+        router.push('/checkout')
+      } else {
+        showToast('Failed to add to cart', 'error')
+      }
+    } catch (err) {
+      console.error(err)
+      showToast('An error occurred', 'error')
+    } finally {
+      setAddingToCart(null)
+    }
+  }
 
   // Apply search, filter, and sort
   const processedProducts = useMemo(() => {
@@ -235,28 +306,42 @@ function ShopContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-md">
             {isLoading ? (
               Array.from({ length: itemsPerPage }).map((_, n) => (
-                <div key={n} className="aspect-[3/4] bg-surface-container/50 animate-pulse"></div>
+                <div key={n} className="aspect-[4/5] bg-surface-container/50 animate-pulse"></div>
               ))
             ) : paginatedProducts.length > 0 ? (
               paginatedProducts.map((product) => (
                 <div key={product.id} className="product-card group relative bg-surface-container-lowest overflow-hidden transition-all duration-500">
-                  <div className="aspect-[3/4] relative overflow-hidden bg-surface-container">
+                  <div className="aspect-[4/5] relative overflow-hidden bg-surface-container">
                     <img
                       alt={product.name}
                       className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
                       src={(product as any).image || product.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"}
                     />
-                    <div className="overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                    <div className="overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-sm">
                       <Link href={`/shop/${product.id}`}>
-                        <button className="border border-primary/50 text-primary px-lg py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500">
+                        <button className="border border-primary/50 text-primary px-lg py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500 min-w-[160px]">
                           Quick View
                         </button>
                       </Link>
+                      <button
+                        onClick={() => handleAddToCart(product.id)}
+                        disabled={addingToCart === product.id}
+                        className="border border-primary text-on-primary bg-primary px-lg py-sm font-label-sm text-[10px] uppercase tracking-widest hover:brightness-110 transition-all duration-500 disabled:opacity-50 min-w-[160px]"
+                      >
+                        {addingToCart === product.id ? 'Adding...' : 'Add to Cart'}
+                      </button>
+                      <button
+                        onClick={() => handleBuyNow(product.id)}
+                        disabled={addingToCart === product.id}
+                        className="border border-outline-variant/50 text-on-surface px-lg py-sm font-label-sm text-[10px] uppercase tracking-widest hover:border-primary hover:text-primary transition-all duration-500 disabled:opacity-50 min-w-[160px]"
+                      >
+                        Buy Now
+                      </button>
                     </div>
                   </div>
                   <div className="p-md text-center">
                     <h4 className="font-headline-md text-[13px] tracking-[0.05em] mb-xs uppercase opacity-90">{product.name}</h4>
-                    <p className="font-label-sm text-[10px] tracking-[0.15em] text-primary">Rs.{product.price?.toFixed(2)}</p>
+                    <p className="font-label-sm text-[10px] tracking-[0.15em] text-primary">{formatPrice(product.price)}</p>
                     <div className="mt-base flex justify-center opacity-0 group-hover:opacity-40 transition-all duration-500">
                       <span className="text-caption font-caption text-[11px] text-on-surface-variant uppercase tracking-tighter">
                         {product.category || 'Handmade Artifact'}

@@ -222,6 +222,16 @@ body {
   border-radius: 4px;
 }
 
+/* Toast notification animation */
+@keyframes toast-in {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.animate-toast-in {
+  animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Status badge colors */
 .status-pending { background-color: rgba(229, 168, 76, 0.15); color: #E5A84C; }
 .status-processing { background-color: rgba(74, 144, 217, 0.15); color: #4A90D9; }

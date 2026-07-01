@@ -10,6 +10,8 @@ import StorefrontLayout from '@/components/storefront/StorefrontLayout'
 import { getAuth } from 'firebase/auth'
 import app from '@/lib/firebase'
 import { ImageIcon } from 'lucide-react'
+import { formatPrice } from '@/lib/formatPrice'
+import { showToast } from '@/components/storefront/Toast'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -165,13 +167,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
       const data = await res.json()
       if (data.success) {
-        alert('Added to Cart!')
+        showToast('Added to sanctuary')
       } else {
-        alert('Failed to add to cart: ' + data.error)
+        showToast('Failed to add to cart', 'error')
       }
     } catch (err) {
       console.error(err)
-      alert('An error occurred adding to cart')
+      showToast('An error occurred', 'error')
     } finally {
       setIsAdding(false)
     }
@@ -247,8 +249,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 <h1 className="font-mono text-[24px] tracking-tight text-on-background mb-base">
                   {product.name}
                 </h1>
-                <p className="font-mono text-[18px] text-on-surface">
-                  LKR {product.price?.toLocaleString()}
+                <p className="font-mono text-[18px] text-primary">
+                  {formatPrice(product.price)}
                 </p>
               </div>
 
@@ -318,7 +320,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   disabled={isAdding}
                   className="w-full bg-primary text-on-primary font-bold py-md px-lg font-mono text-[13px] uppercase tracking-[0.2em] hover:brightness-110 transition-all duration-300 disabled:opacity-50"
                 >
-                  {isAdding ? 'ADDING...' : 'ADD TO SANCTUARY'}
+                  {isAdding ? 'ADDING...' : 'ADD TO ACCOUNT'}
                 </button>
               </div>
 
@@ -348,15 +350,15 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </p>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
               {relatedProducts.map((relatedProduct) => (
                 <div key={relatedProduct.id} className="related-card group relative bg-surface-container-lowest overflow-hidden transition-all duration-500">
-                  <div className="aspect-[3/4] relative overflow-hidden bg-surface-container">
-                    <img 
-                      alt={relatedProduct.name} 
-                      className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" 
-                      src={(relatedProduct as any).image || relatedProduct.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"} 
+                  <div className="aspect-[4/5] relative overflow-hidden bg-surface-container">
+                    <img
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
+                      src={(relatedProduct as any).image || relatedProduct.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"}
                     />
                     <div className="overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                       <Link href={`/shop/${relatedProduct.id}`}>
@@ -368,7 +370,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   </div>
                   <div className="p-md text-center">
                     <h4 className="font-mono text-[12px] tracking-tight mb-xs uppercase opacity-90">{relatedProduct.name}</h4>
-                    <p className="font-mono text-[10px] tracking-widest text-primary">LKR {relatedProduct.price?.toLocaleString()}</p>
+                    <p className="font-mono text-[10px] tracking-widest text-primary">{formatPrice(relatedProduct.price)}</p>
                   </div>
                 </div>
               ))}

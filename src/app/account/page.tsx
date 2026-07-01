@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import StorefrontLayout from '@/components/storefront/StorefrontLayout'
 import { getAuth, onAuthStateChanged, User, signOut } from 'firebase/auth'
 import app from '@/lib/firebase'
+import { formatPrice } from '@/lib/formatPrice'
 
 interface Order {
   id: string
@@ -17,6 +18,22 @@ interface Order {
   total: number
   status: string
   createdAt: string
+}
+
+function getInitials(name: string | null | undefined): string {
+  if (!name) return '?'
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+}
+
+function getStatusClasses(status: string): string {
+  switch (status.toLowerCase()) {
+    case 'pending': return 'status-pending'
+    case 'processing': return 'status-processing'
+    case 'dispatched': return 'status-dispatched'
+    case 'delivered': return 'status-delivered'
+    case 'cancelled': return 'status-cancelled'
+    default: return 'bg-surface-container-high text-on-surface'
+  }
 }
 
 export default function AccountPage() {
@@ -85,7 +102,7 @@ export default function AccountPage() {
         setUser(user)
         try {
           const token = await user.getIdToken()
-          
+
           // Fetch profile
           const profileRes = await fetch('/api/user/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -120,6 +137,11 @@ export default function AccountPage() {
     router.push('/')
   }
 
+  const totalSpent = orders.reduce((sum, o) => sum + (o.total || 0), 0)
+  const memberSince = user?.metadata?.creationTime
+    ? new Date(user.metadata.creationTime).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    : '—'
+
   if (isLoading) {
     return (
       <StorefrontLayout>
@@ -137,12 +159,34 @@ export default function AccountPage() {
       <div className="pt-[110px] min-h-screen">
         {/* Hero Spiritual Minimalist Header */}
         <section className="w-full py-xl px-gutter flex flex-col items-center text-center">
+          {/* Avatar */}
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 border border-primary/40 flex items-center justify-center mb-md gold-glow">
+            <span className="text-gradient-gold font-mono text-[28px] font-bold tracking-tight">{getInitials(user.displayName)}</span>
+          </div>
           <div className="mb-sm opacity-60 font-label-sm text-[10px] tracking-[0.3em] uppercase">Identity & Collection</div>
-          <h2 className="font-headline-xl text-[36px] mb-md text-on-surface tracking-tight uppercase">My Sanctuary</h2>
-          <div className="w-12 h-[1px] bg-primary-container mb-md"></div>
+          <h2 className="font-headline-xl text-[36px] mb-md text-on-surface tracking-tight uppercase">My Account</h2>
+          <div className="w-12 h-[1px] bg-primary/40 mb-md"></div>
           <p className="font-caption text-[11px] text-on-surface-variant max-w-[576px] opacity-80 uppercase tracking-widest leading-relaxed">
             A personal space dedicated to your journey through handmade artisanal luxury and spiritual connection.
           </p>
+        </section>
+
+        {/* Stats Row */}
+        <section className="max-w-container-max mx-auto px-gutter mb-lg">
+          <div className="grid grid-cols-3 gap-md">
+            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500">
+              <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Total Orders</div>
+              <div className="font-headline-xl text-[28px] text-primary">{orders.length.toString().padStart(2, '0')}</div>
+            </div>
+            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500">
+              <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Total Spent</div>
+              <div className="font-headline-xl text-[28px] text-on-surface">{formatPrice(totalSpent)}</div>
+            </div>
+            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500">
+              <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Member Since</div>
+              <div className="font-headline-xl text-[20px] text-on-surface uppercase tracking-wider">{memberSince}</div>
+            </div>
+          </div>
         </section>
 
         {/* Main Dashboard Content */}
@@ -150,8 +194,8 @@ export default function AccountPage() {
 
           {/* Left Column: Personal Identity */}
           <aside className="md:col-span-4 space-y-lg md:sticky md:top-[120px]">
-            <div className="bg-surface-container-low p-md border border-outline-variant relative overflow-hidden group">
-              <div className="absolute inset-0 opacity-10 pointer-events-none"></div>
+            <div className="glass-panel p-md border border-outline-variant/40 relative overflow-hidden group gold-glow">
+              <div className="absolute inset-0 opacity-5 pointer-events-none bg-gradient-to-br from-primary/20 to-transparent"></div>
               <div className="relative z-10">
                 <div className="flex items-end justify-between mb-lg">
                   <h3 className="font-body-lg text-[18px] text-on-surface uppercase tracking-widest">Identity</h3>
@@ -167,7 +211,7 @@ export default function AccountPage() {
                 <div className="space-y-md">
                   <div className="group/input">
                     <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Soul Name</label>
-                    <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+                    <div className="border-b border-outline-variant/50 py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
                       {isEditing ? (
                         <input
                           type="text"
@@ -183,7 +227,7 @@ export default function AccountPage() {
                   </div>
                   <div className="group/input">
                     <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Email Resonance</label>
-                    <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+                    <div className="border-b border-outline-variant/50 py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
                       {isEditing ? (
                         <input
                           type="email"
@@ -199,7 +243,7 @@ export default function AccountPage() {
                   </div>
                   <div className="group/input">
                     <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Mobile Resonance</label>
-                    <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+                    <div className="border-b border-outline-variant/50 py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
                       {isEditing ? (
                         <input
                           type="tel"
@@ -215,7 +259,7 @@ export default function AccountPage() {
                   </div>
                   <div className="group/input">
                     <label className="block font-label-sm text-[10px] text-on-surface-variant uppercase mb-xs tracking-widest">Sanctuary Address</label>
-                    <div className="border-b border-outline-variant py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
+                    <div className="border-b border-outline-variant/50 py-xs group-focus-within/input:border-primary transition-colors flex justify-between items-center">
                       {isEditing ? (
                         <input
                           type="text"
@@ -250,10 +294,10 @@ export default function AccountPage() {
                   </div>
                 )}
 
-                <div className="mt-xl pt-md border-t border-outline-variant flex gap-sm">
+                <div className="mt-xl pt-md border-t border-outline-variant/30 flex gap-sm">
                   <button
                     onClick={handleSignOut}
-                    className="border border-primary text-primary px-md py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary/5 transition-all w-full"
+                    className="border border-primary/50 text-primary px-md py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary/10 transition-all w-full"
                   >
                     Logout
                   </button>
@@ -262,7 +306,7 @@ export default function AccountPage() {
             </div>
 
             {/* Subtle Decorative Card */}
-            <div className="bg-surface-container-lowest p-md border border-outline-variant relative overflow-hidden h-64 flex flex-col justify-end">
+            <div className="bg-surface-container-lowest p-md border border-outline-variant/30 relative overflow-hidden h-64 flex flex-col justify-end">
               <img
                 alt="Sri Lankan Ceramic"
                 className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity"
@@ -288,14 +332,16 @@ export default function AccountPage() {
             {/* Orders Table-like Grid */}
             <div className="space-y-sm">
               {orders.length === 0 ? (
-                <div className="p-xl border border-outline-variant text-center bg-surface-container-low">
+                <div className="p-xl border border-outline-variant/30 text-center bg-surface-container-low">
+                  <span className="material-symbols-outlined text-[40px] text-outline-variant mb-md block opacity-40">inventory_2</span>
                   <p className="font-caption text-[12px] text-on-surface-variant uppercase tracking-widest">No curations manifested yet.</p>
+                  <p className="font-caption text-[11px] text-on-surface-variant opacity-50 mt-xs">Begin your journey in the shop.</p>
                 </div>
               ) : (
                 orders.map((order, i) => (
-                  <div key={order.id} className="bg-surface-container-low border border-outline-variant flex flex-col md:flex-row md:items-center p-md group hover:bg-surface-container-high transition-all duration-500">
-                    <div className="w-24 h-24 bg-background border border-outline-variant shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden flex items-center justify-center">
-                      <span className="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary transition-colors">card_giftcard</span>
+                  <div key={order.id} className="bg-surface-container-low border border-outline-variant/30 flex flex-col md:flex-row md:items-center p-md group hover:bg-surface-container-high hover:border-outline-variant/50 transition-all duration-500">
+                    <div className="w-24 h-24 bg-surface-container border border-outline-variant/30 shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden flex items-center justify-center">
+                      <span className="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary transition-colors duration-500">card_giftcard</span>
                     </div>
                     <div className="flex-1 flex flex-col md:grid md:grid-cols-4 gap-sm md:gap-md md:items-center w-full">
                       <div className="md:col-span-2 flex justify-between items-start md:block">
@@ -306,22 +352,20 @@ export default function AccountPage() {
                         </div>
                         {/* Status for Mobile */}
                         <div className="md:hidden mt-1">
-                          <div className={`flex items-center gap-xs font-label-sm text-[10px] uppercase tracking-widest ${order.status === 'pending' ? 'text-primary-container' : 'text-on-surface'}`}>
-                            <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span>
+                          <span className={`inline-flex items-center gap-xs px-sm py-[2px] rounded-sm font-label-sm text-[10px] uppercase tracking-widest ${getStatusClasses(order.status)}`}>
                             {order.status}
-                          </div>
+                          </span>
                         </div>
                       </div>
                       <div className="hidden md:block">
                         <div className="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant mb-xs">Status</div>
-                        <div className={`flex items-center gap-xs font-label-sm text-[11px] uppercase tracking-widest ${order.status === 'pending' ? 'text-primary-container' : 'text-on-surface'}`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'pending' ? 'bg-primary-container animate-pulse' : 'bg-primary'}`}></span>
+                        <span className={`inline-flex items-center gap-xs px-sm py-[2px] rounded-sm font-label-sm text-[11px] uppercase tracking-widest ${getStatusClasses(order.status)}`}>
                           {order.status}
-                        </div>
+                        </span>
                       </div>
-                      <div className="flex justify-between items-center md:block md:text-right mt-xs md:mt-0 pt-sm md:pt-0 border-t border-outline-variant md:border-0">
+                      <div className="flex justify-between items-center md:block md:text-right mt-xs md:mt-0 pt-sm md:pt-0 border-t border-outline-variant/20 md:border-0">
                         <div className="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant md:mb-xs">Value</div>
-                        <div className="font-headline-md text-[15px] md:text-[14px] text-on-surface font-medium">${order.total.toFixed(2)}</div>
+                        <div className="font-headline-md text-[15px] md:text-[14px] text-primary font-medium">{formatPrice(order.total)}</div>
                       </div>
                     </div>
                   </div>
@@ -330,15 +374,15 @@ export default function AccountPage() {
             </div>
 
             {/* Loyalty / Sanctuary Points Section */}
-            <div className="mt-lg border border-outline-variant p-md flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest text-center md:text-left">
+            <div className="mt-lg border border-primary/20 p-md flex flex-col md:flex-row justify-between items-center bg-gradient-to-r from-surface-container-lowest to-surface-container-low text-center md:text-left">
               <div className="mb-md md:mb-0">
-                <h6 className="font-body-lg text-[15px] text-primary uppercase tracking-widest">Artisan Legacy</h6>
+                <h6 className="font-body-lg text-[15px] text-gradient-gold uppercase tracking-widest">Artisan Legacy</h6>
                 <p className="font-body-md text-[13px] text-on-surface-variant uppercase tracking-widest">You have curated {orders.length} unique stories.</p>
               </div>
               <div className="flex gap-md">
-                <div className="text-center">
+                <div className="text-center gold-glow-strong px-lg py-sm border border-primary/30 bg-primary/5">
                   <div className="font-label-sm text-[10px] text-primary uppercase tracking-widest">Sanctuary Tier</div>
-                  <div className="font-headline-xl text-[24px] text-on-surface uppercase">GOLD</div>
+                  <div className="font-headline-xl text-[24px] text-gradient-gold uppercase">GOLD</div>
                 </div>
               </div>
             </div>

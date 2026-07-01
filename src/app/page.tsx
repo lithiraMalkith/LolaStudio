@@ -222,7 +222,7 @@ export default function HomePage() {
                       <p className="font-headline-md text-[18px] text-on-surface">The Monolith Burner</p>
                       <p className="font-caption text-[11px] text-on-surface-variant">Charcoal Ceramic</p>
                     </div>
-                    <span className="font-label-sm text-[10px] text-primary">$180.00</span>
+                    <span className="font-label-sm text-[10px] text-primary">Rs 180.00</span>
                   </div>
                 </Link>
               </div>
@@ -234,7 +234,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-base">
                     <p className="font-body-md text-[13px] text-on-surface">Vessent Offering Bowl</p>
-                    <span className="font-label-sm text-[10px] text-on-surface-variant">$85.00</span>
+                    <span className="font-label-sm text-[10px] text-on-surface-variant">Rs 85.00</span>
                   </div>
                 </Link>
               </div>
@@ -246,7 +246,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-base">
                     <p className="font-body-md text-[13px] text-on-surface">Sandalwood Pillar</p>
-                    <span className="font-label-sm text-[10px] text-on-surface-variant">$60.00</span>
+                    <span className="font-label-sm text-[10px] text-on-surface-variant">Rs 60.00</span>
                   </div>
                 </Link>
               </div>
@@ -258,7 +258,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-base flex justify-between">
                     <p className="font-body-md text-[13px] text-on-surface">Zen Masterpiece Statue</p>
-                    <span className="font-label-sm text-[10px] text-on-surface-variant">$450.00</span>
+                    <span className="font-label-sm text-[10px] text-on-surface-variant">Rs 450.00</span>
                   </div>
                 </Link>
               </div>
