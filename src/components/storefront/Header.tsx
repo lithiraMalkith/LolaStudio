@@ -23,11 +23,11 @@ export default function Header() {
     >
       <div className="max-w-container-max mx-auto px-gutter w-full h-full flex justify-between items-center">
         <div className="flex items-center gap-md">
+          <Link href="/" className="text-primary hover:text-primary-fixed text-[13px] uppercase tracking-widest hidden md:block">
+            Home
+          </Link>
           <Link href="/shop" className="text-primary hover:text-primary-fixed text-[13px] uppercase tracking-widest hidden md:block">
             Shop
-          </Link>
-          <Link href="/contact" className="text-primary hover:text-primary-fixed text-[13px] uppercase tracking-widest hidden md:block">
-            Contact
           </Link>
         </div>
         

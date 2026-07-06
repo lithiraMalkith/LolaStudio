@@ -155,36 +155,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Sanctuary Voices (Testimonials) Section */}
-        <section className="py-xl bg-surface-container-lowest border-y border-outline-variant/20">
-          <div className="max-w-container-max mx-auto px-gutter">
-            <div className="flex flex-col items-center mb-xl text-center">
-              <span className="font-label-sm text-[10px] text-primary uppercase tracking-[0.4em] mb-base">Testimonials</span>
-              <h3 className="font-headline-xl text-[24px] text-on-surface">Sanctuary Voices</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl" id="testimonials-grid">
-              {/* Testimonial 1 */}
-              <div className="flex flex-col items-center text-center space-y-md">
-                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
-                <p className="font-body-lg text-[14px] text-on-surface italic">"A moment of stillness in a vessel. The craftsmanship is profoundly grounding."</p>
-                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— E.R., Kyoto</span>
-              </div>
-              {/* Testimonial 2 */}
-              <div className="flex flex-col items-center text-center space-y-md">
-                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
-                <p className="font-body-lg text-[14px] text-on-surface italic">"Quiet luxury defined. It transforms my daily rituals into sacred pauses."</p>
-                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— M.T., London</span>
-              </div>
-              {/* Testimonial 3 */}
-              <div className="flex flex-col items-center text-center space-y-md hidden lg:flex">
-                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
-                <p className="font-body-lg text-[14px] text-on-surface italic">"The texture alone tells a story of ancient techniques brought to modern spaces."</p>
-                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— A.L., New York</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Philosophy Section */}
         <section className="py-xl bg-surface-container-lowest">
           <div className="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-12 gap-xl items-center">
@@ -273,6 +243,36 @@ export default function HomePage() {
             <span className="material-symbols-outlined text-primary text-[32px] mb-lg opacity-40" data-icon="self_improvement">self_improvement</span>
             <h4 className="font-display-lg text-[24px] text-on-surface italic mb-lg leading-relaxed opacity-90">"The quieter you become, the more you are able to hear."</h4>
             <p className="font-label-sm text-[10px] text-primary uppercase tracking-[0.5em]">— ANCIENT WISDOM</p>
+          </div>
+        </section>
+
+        {/* Sanctuary Voices (Testimonials) Section */}
+        <section className="py-xl bg-surface-container-lowest border-y border-outline-variant/20">
+          <div className="max-w-container-max mx-auto px-gutter">
+            <div className="flex flex-col items-center mb-xl text-center">
+              <span className="font-label-sm text-[10px] text-primary uppercase tracking-[0.4em] mb-base">Testimonials</span>
+              <h3 className="font-headline-xl text-[24px] text-on-surface">Sanctuary Voices</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl" id="testimonials-grid">
+              {/* Testimonial 1 */}
+              <div className="flex flex-col items-center text-center space-y-md">
+                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
+                <p className="font-body-lg text-[14px] text-on-surface italic">"A moment of stillness in a vessel. The craftsmanship is profoundly grounding."</p>
+                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— E.R., Kyoto</span>
+              </div>
+              {/* Testimonial 2 */}
+              <div className="flex flex-col items-center text-center space-y-md">
+                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
+                <p className="font-body-lg text-[14px] text-on-surface italic">"Quiet luxury defined. It transforms my daily rituals into sacred pauses."</p>
+                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— M.T., London</span>
+              </div>
+              {/* Testimonial 3 */}
+              <div className="flex flex-col items-center text-center space-y-md hidden lg:flex">
+                <span className="material-symbols-outlined text-primary text-[24px] opacity-40" data-icon="format_quote">format_quote</span>
+                <p className="font-body-lg text-[14px] text-on-surface italic">"The texture alone tells a story of ancient techniques brought to modern spaces."</p>
+                <span className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">— A.L., New York</span>
+              </div>
+            </div>
           </div>
         </section>
       </div>

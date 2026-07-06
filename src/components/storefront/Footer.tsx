@@ -4,17 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [subscribed, setSubscribed] = useState(false)
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (email.trim()) {
-      setSubscribed(true)
-      setEmail('')
-      setTimeout(() => setSubscribed(false), 4000)
-    }
-  }
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -25,29 +15,21 @@ export default function Footer() {
       {/* Top gradient divider */}
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
 
-      {/* Newsletter Section */}
+      {/* Contact Us Section */}
       <div className="bg-surface-container-lowest py-xl px-gutter">
         <div className="max-w-container-max mx-auto flex flex-col md:flex-row items-center justify-between gap-lg">
           <div className="text-center md:text-left">
-            <h4 className="font-headline-md text-[16px] text-on-surface uppercase tracking-widest mb-xs">Sacred Dispatches</h4>
-            <p className="font-caption text-[11px] text-on-surface-variant uppercase tracking-widest opacity-60">Receive curated stories & new arrivals to your inbox.</p>
+            <h4 className="font-headline-md text-[16px] text-on-surface uppercase tracking-widest mb-xs">Get in Touch</h4>
+            <p className="font-caption text-[11px] text-on-surface-variant uppercase tracking-widest opacity-60">Have a question or need assistance? We are here to help.</p>
           </div>
-          <form onSubmit={handleSubscribe} className="flex gap-sm w-full md:w-auto">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="YOUR EMAIL ADDRESS"
-              required
-              className="bg-transparent border-b border-outline-variant/40 py-sm px-0 font-mono text-[11px] text-on-surface uppercase tracking-widest placeholder:text-on-surface-variant/30 focus:border-primary focus:outline-none transition-colors w-full md:w-64"
-            />
-            <button
-              type="submit"
-              className="px-lg py-sm border border-primary/40 text-primary font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500 whitespace-nowrap"
+          <div className="flex w-full md:w-auto justify-center md:justify-end">
+            <Link
+              href="/contact"
+              className="px-xl py-md border border-primary/40 text-primary font-label-sm text-[12px] uppercase tracking-[0.2em] hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-500 whitespace-nowrap"
             >
-              {subscribed ? '✓ Subscribed' : 'Subscribe'}
-            </button>
-          </form>
+              Contact Us
+            </Link>
+          </div>
         </div>
       </div>
 
