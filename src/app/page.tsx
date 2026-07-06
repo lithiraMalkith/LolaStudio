@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import StorefrontLayout from '@/components/storefront/StorefrontLayout'
+import { formatPrice } from '@/lib/utils'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -139,7 +140,7 @@ export default function HomePage() {
                     <div className="flex justify-between items-center">
                       <div>
                         <p className="font-body-md text-[13px] text-on-surface">{product.name}</p>
-                        <p className="font-caption text-[11px] text-on-surface-variant">Rs.{product.price.toFixed(2)}</p>
+                        <p className="font-caption text-[11px] text-on-surface-variant">{formatPrice(product.price)}</p>
                       </div>
                       <Link href={`/shop/${product.id}`} className="font-label-sm text-[10px] text-primary uppercase tracking-widest border-b border-primary/30 pb-[2px] hover:border-primary">View Details</Link>
                     </div>
@@ -222,7 +223,7 @@ export default function HomePage() {
                       <p className="font-headline-md text-[18px] text-on-surface">The Monolith Burner</p>
                       <p className="font-caption text-[11px] text-on-surface-variant">Charcoal Ceramic</p>
                     </div>
-                    <span className="font-label-sm text-[10px] text-primary">Rs 180.00</span>
+                    <span className="font-label-sm text-[10px] text-primary">LKR 180.00</span>
                   </div>
                 </Link>
               </div>
@@ -234,7 +235,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-base">
                     <p className="font-body-md text-[13px] text-on-surface">Vessent Offering Bowl</p>
-                    <span className="font-label-sm text-[10px] text-on-surface-variant">Rs 85.00</span>
+                    <span className="font-label-sm text-[10px] text-on-surface-variant">LKR 85.00</span>
                   </div>
                 </Link>
               </div>
@@ -246,7 +247,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-base">
                     <p className="font-body-md text-[13px] text-on-surface">Sandalwood Pillar</p>
-                    <span className="font-label-sm text-[10px] text-on-surface-variant">Rs 60.00</span>
+                    <span className="font-label-sm text-[10px] text-on-surface-variant">LKR 60.00</span>
                   </div>
                 </Link>
               </div>
@@ -258,7 +259,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-base flex justify-between">
                     <p className="font-body-md text-[13px] text-on-surface">Zen Masterpiece Statue</p>
-                    <span className="font-label-sm text-[10px] text-on-surface-variant">Rs 450.00</span>
+                    <span className="font-label-sm text-[10px] text-on-surface-variant">LKR 450.00</span>
                   </div>
                 </Link>
               </div>

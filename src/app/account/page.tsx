@@ -36,6 +36,26 @@ function getStatusClasses(status: string): string {
   }
 }
 
+function getOrderImage(order: Order): string {
+  const FALLBACK = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDpvP3yWw5zmPKOCZFiSFu7pWEHW5il2vbYK7v1O6eHuFdkO00qFSWveZ-N3JBQbT3aaFI-z6EqDNdP9H9-PCpVc-_5vzW1Yau1dLf-nMzVibin_ZNOTvPM48M2a870XTlV7aT7SiViWZlRb2KYrN6tMwxJ5GMEOOLpHC8aIgUPAm39w8w3aNvCAZVLB9LGfVxyuasc4Kjq89PmV9GoVPkI3pt1Z5DDsrCSYC0iKgOqjSED-wGcChYx6stXZjIabrpzGnoCquTtXmSh'
+
+  // Try direct order image
+  const anyOrder: any = order as any
+  if (anyOrder.image) return anyOrder.image
+
+  // Try first item image or images array
+  if (order.items && order.items.length > 0) {
+    const first = order.items[0] as any
+    if (!first) return FALLBACK
+    if (first.image) return first.image
+    if (first.images && Array.isArray(first.images) && first.images.length > 0) return first.images[0]
+    if (first.thumbnail) return first.thumbnail
+    if (first.product && first.product.images && Array.isArray(first.product.images) && first.product.images.length > 0) return first.product.images[0]
+  }
+
+  return FALLBACK
+}
+
 export default function AccountPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
@@ -173,18 +193,18 @@ export default function AccountPage() {
 
         {/* Stats Row */}
         <section className="max-w-container-max mx-auto px-gutter mb-lg">
-          <div className="grid grid-cols-3 gap-md">
-            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500">
+            <div className="grid grid-cols-3 gap-md">
+            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
               <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Total Orders</div>
-              <div className="font-headline-xl text-[28px] text-primary">{orders.length.toString().padStart(2, '0')}</div>
+              <div className="font-headline-xl text-[28px] text-primary whitespace-nowrap">{orders.length.toString().padStart(2, '0')}</div>
             </div>
-            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500">
+            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
               <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Total Spent</div>
-              <div className="font-headline-xl text-[28px] text-on-surface">{formatPrice(totalSpent)}</div>
+              <div className="font-headline-xl text-[28px] text-on-surface whitespace-nowrap">{formatPrice(totalSpent)}</div>
             </div>
-            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500">
+            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
               <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Member Since</div>
-              <div className="font-headline-xl text-[20px] text-on-surface uppercase tracking-wider">{memberSince}</div>
+              <div className="font-headline-xl text-[20px] text-on-surface uppercase tracking-wider whitespace-nowrap">{memberSince}</div>
             </div>
           </div>
         </section>
@@ -341,7 +361,11 @@ export default function AccountPage() {
                 orders.map((order, i) => (
                   <div key={order.id} className="bg-surface-container-low border border-outline-variant/30 flex flex-col md:flex-row md:items-center p-md group hover:bg-surface-container-high hover:border-outline-variant/50 transition-all duration-500">
                     <div className="w-24 h-24 bg-surface-container border border-outline-variant/30 shrink-0 mb-md md:mb-0 md:mr-md overflow-hidden flex items-center justify-center">
-                      <span className="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary transition-colors duration-500">card_giftcard</span>
+                      <img
+                        src={getOrderImage(order)}
+                        alt={`Order ${order.id}`}
+                        className="w-full h-full object-cover group-hover:opacity-90 transition-all duration-500"
+                      />
                     </div>
                     <div className="flex-1 flex flex-col md:grid md:grid-cols-4 gap-sm md:gap-md md:items-center w-full">
                       <div className="md:col-span-2 flex justify-between items-start md:block">

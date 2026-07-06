@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import StorefrontLayout from '@/components/storefront/StorefrontLayout'
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import app from '@/lib/firebase'
+import { formatPrice } from '@/lib/utils'
 
 interface CartItem {
   id: string
@@ -42,7 +43,7 @@ export default function CartPage() {
             headers: { 'Authorization': `Bearer ${token}` }
           })
           const data = await res.json()
-          
+
           if (data.success && data.data) {
             // Enrich with product details
             const items = await Promise.all(data.data.map(async (item: any) => {
@@ -127,10 +128,10 @@ export default function CartPage() {
                 cartItems.map((item) => (
                   <div key={item.id} className="flex flex-col md:flex-row py-lg gap-md border-b border-outline-variant group">
                     <div className="w-full md:w-48 aspect-[3/4] bg-surface-container-low overflow-hidden">
-                      <img 
-                        src={item.product.images?.[0] || 'https://via.placeholder.com/150'} 
-                        alt={item.product.name} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      <img
+                        src={item.product.images?.[0] || 'https://via.placeholder.com/150'}
+                        alt={item.product.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
                     <div className="flex-1 flex flex-col justify-between py-xs">
@@ -141,14 +142,14 @@ export default function CartPage() {
                             {item.product.category || 'Handmade Artifact'}
                           </p>
                         </div>
-                        <span className="font-body-lg text-[16px] text-primary">${item.product.price.toFixed(2)}</span>
+                        <span className="font-body-lg text-[16px] text-primary">{formatPrice(item.product.price)}</span>
                       </div>
                       <div className="flex items-center justify-between mt-lg">
                         <div className="flex items-center gap-md border border-outline-variant px-md py-xs">
                           <span className="font-label-sm text-[11px] text-on-surface-variant uppercase">QTY</span>
                           <span className="font-label-sm text-[11px] w-8 text-center">{item.quantity.toString().padStart(2, '0')}</span>
                         </div>
-                        <button 
+                        <button
                           onClick={() => removeItem(item.id)}
                           className="font-label-sm text-[11px] text-on-surface-variant hover:text-error transition-colors uppercase tracking-widest gold-underline-hover"
                         >
@@ -178,29 +179,29 @@ export default function CartPage() {
                 <span className="font-label-sm text-[11px] text-primary uppercase">Financials</span>
                 <h3 className="font-body-lg text-[16px] text-on-surface uppercase tracking-widest">ORDER SUMMARY</h3>
               </div>
-              
+
               <div className="flex flex-col gap-md py-md border-y border-outline-variant">
                 <div className="flex justify-between items-center">
                   <span className="font-label-sm text-[11px] text-on-surface-variant uppercase">Subtotal</span>
-                  <span className="font-body-md text-[14px] text-on-surface">${subtotal.toFixed(2)}</span>
+                  <span className="font-body-md text-[14px] text-on-surface">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="font-label-sm text-[11px] text-on-surface-variant uppercase">Logistics</span>
-                  <span className="font-body-md text-[14px] text-on-surface">${logistics.toFixed(2)}</span>
+                  <span className="font-body-md text-[14px] text-on-surface">{formatPrice(logistics)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="font-label-sm text-[11px] text-on-surface-variant uppercase">Tax</span>
-                  <span className="font-body-md text-[14px] text-on-surface">$0.00</span>
+                  <span className="font-body-md text-[14px] text-on-surface">LKR 0.00</span>
                 </div>
               </div>
 
               <div className="flex justify-between items-end">
                 <span className="font-label-sm text-[11px] text-on-surface-variant uppercase">Total Balance</span>
-                <span className="font-body-lg text-[16px] text-primary">${total.toFixed(2)}</span>
+                <span className="font-body-lg text-[16px] text-primary">{formatPrice(total)}</span>
               </div>
 
               <div className="flex flex-col gap-sm">
-                <button 
+                <button
                   onClick={() => cartItems.length > 0 && router.push('/checkout')}
                   disabled={cartItems.length === 0}
                   className="w-full py-md bg-primary text-on-primary font-label-sm text-[11px] uppercase tracking-widest hover:opacity-90 transition-all duration-500 active:scale-95 disabled:opacity-50"

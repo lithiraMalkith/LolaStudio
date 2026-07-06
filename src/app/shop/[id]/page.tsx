@@ -167,7 +167,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
       const data = await res.json()
       if (data.success) {
-        showToast('Added to sanctuary')
+        showToast('Added to cart')
       } else {
         showToast('Failed to add to cart', 'error')
       }
@@ -320,7 +320,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   disabled={isAdding}
                   className="w-full bg-primary text-on-primary font-bold py-md px-lg font-mono text-[13px] uppercase tracking-[0.2em] hover:brightness-110 transition-all duration-300 disabled:opacity-50"
                 >
-                  {isAdding ? 'ADDING...' : 'ADD TO ACCOUNT'}
+                  {isAdding ? 'ADDING...' : 'ADD TO CART'}
                 </button>
               </div>
 

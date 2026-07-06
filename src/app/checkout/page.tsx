@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import app from '@/lib/firebase'
+import { formatPrice } from '@/lib/utils'
 
 interface CartItem {
   id: string
@@ -44,7 +45,7 @@ export default function CheckoutPage() {
       if (user) {
         try {
           const token = await user.getIdToken()
-          
+
           // Fetch user profile for autofill
           const profileRes = await fetch('/api/user/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -55,7 +56,7 @@ export default function CheckoutPage() {
             const nameParts = (data.displayName || '').split(' ')
             const firstName = nameParts[0] || ''
             const lastName = nameParts.slice(1).join(' ') || ''
-            
+
             setShippingInfo(prev => ({
               ...prev,
               firstName: prev.firstName || firstName,
@@ -299,7 +300,7 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex justify-between items-end">
                         <span className="font-caption text-[12px] text-on-surface-variant">Qty: {item.quantity}</span>
-                        <span className="font-body-md text-[14px] font-bold text-on-surface">${item.product.price.toFixed(2)}</span>
+                        <span className="font-body-md text-[14px] font-bold text-on-surface">{formatPrice(item.product.price)}</span>
                       </div>
                     </div>
                   </div>
@@ -310,19 +311,19 @@ export default function CheckoutPage() {
               <div className="space-y-sm pt-md border-t border-outline-variant">
                 <div className="flex justify-between font-caption text-[12px] text-on-surface-variant uppercase tracking-wider">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between font-caption text-[12px] text-on-surface-variant uppercase tracking-wider">
                   <span>Shipping</span>
-                  <span>${logistics.toFixed(2)}</span>
+                  <span>{formatPrice(logistics)}</span>
                 </div>
                 <div className="flex justify-between font-caption text-[12px] text-on-surface-variant uppercase tracking-wider">
                   <span>Taxes</span>
-                  <span>${tax.toFixed(2)}</span>
+                  <span>{formatPrice(tax)}</span>
                 </div>
                 <div className="flex justify-between font-body-lg text-[18px] font-bold text-primary uppercase pt-base border-t border-outline-variant">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>{formatPrice(total)}</span>
                 </div>
               </div>
 

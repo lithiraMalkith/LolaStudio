@@ -87,7 +87,7 @@ function ShopContent() {
       })
       const data = await res.json()
       if (data.success) {
-        showToast('Added to sanctuary')
+        showToast('Added to cart')
       } else {
         showToast('Failed to add to cart', 'error')
       }
