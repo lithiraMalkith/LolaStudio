@@ -4,8 +4,9 @@ import { useRef, useState, useEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '@/lib/gsap-config'
 import { useAuth } from '@/contexts/auth-context'
-import { fetchDashboardStats } from '@/lib/admin-client'
-import { formatPrice } from '@/lib/utils'
+import { fetchDashboardStats, fetchOrders } from '@/lib/admin-client'
+import { formatPrice, cn } from '@/lib/utils'
+import Link from 'next/link'
 import {
   ShoppingCart,
   DollarSign,
@@ -18,8 +19,22 @@ import {
   Loader2,
   BarChart3,
   LineChart as LineChartIcon,
+  Phone,
+  Eye,
+  CheckCircle,
+  XCircle,
+  Truck,
 } from 'lucide-react'
-import type { DashboardStats } from '@/types'
+import type { DashboardStats, Order, OrderStatus } from '@/types'
+
+const STATUS_CONFIG: Record<OrderStatus, { label: string; class: string; icon: React.ReactNode }> = {
+  pending: { label: 'Pending', class: 'status-pending', icon: <Clock className="w-3.5 h-3.5" /> },
+  processing: { label: 'Processing', class: 'status-processing', icon: <Package className="w-3.5 h-3.5" /> },
+  dispatched: { label: 'Dispatched', class: 'status-dispatched', icon: <Truck className="w-3.5 h-3.5" /> },
+  delivered: { label: 'Delivered', class: 'status-delivered', icon: <CheckCircle className="w-3.5 h-3.5" /> },
+  cancelled: { label: 'Cancelled', class: 'status-cancelled', icon: <XCircle className="w-3.5 h-3.5" /> },
+}
+
 import {
   LineChart,
   Line,
@@ -33,12 +48,11 @@ import {
   Legend,
 } from 'recharts'
 
-
-
 export default function AdminDashboard() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { user, role } = useAuth()
   const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [recentOrders, setRecentOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
 
   // Fetch dashboard stats
@@ -49,8 +63,17 @@ export default function AdminDashboard() {
 
       try {
         const token = await user.getIdToken()
-        const data = await fetchDashboardStats(token)
+        const [data, ordersData] = await Promise.all([
+          fetchDashboardStats(token),
+          fetchOrders(token, { limit: '10' })
+        ])
         setStats(data)
+        setRecentOrders(
+          ordersData.map((order) => ({
+            ...order,
+            createdAt: order.createdAt ? new Date(order.createdAt) : new Date(),
+          }))
+        )
       } catch (error) {
         console.error('Failed to fetch dashboard stats:', error)
         // Fallback to demo data
@@ -172,6 +195,21 @@ export default function AdminDashboard() {
         },
         0.7
       )
+
+      // Recent orders list
+      if (document.querySelectorAll('.recent-order-row').length > 0) {
+        timeline.to(
+          '.recent-order-row',
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.05,
+            duration: 0.5,
+            ease: 'power2.out',
+          },
+          0.8
+        )
+      }
 
       // Pulse animation for low stock alerts
       if (document.querySelector('.low-stock-warning')) {
@@ -497,6 +535,96 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Recent Orders Section */}
+      <div className="bg-brand-surface rounded-xl border border-brand-border overflow-hidden mt-6">
+        <div className="p-6 border-b border-brand-border flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-brand-text">Recent Orders</h2>
+          <Link href="/admin/orders" className="text-xs font-medium text-brand-gold hover:text-brand-gold-hover flex items-center gap-1">
+            View All <ArrowUpRight className="w-3 h-3" />
+          </Link>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="admin-table w-full">
+            <thead>
+              <tr>
+                <th className="text-left px-6 py-3">Order</th>
+                <th className="text-left px-6 py-3">Customer</th>
+                <th className="text-left px-6 py-3">Items</th>
+                <th className="text-left px-6 py-3">Total</th>
+                <th className="text-left px-6 py-3">Status</th>
+                <th className="text-left px-6 py-3">Date</th>
+                <th className="w-12 px-6 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="text-center py-8 text-brand-muted text-sm">
+                    No recent orders.
+                  </td>
+                </tr>
+              ) : (
+                recentOrders.map((order) => (
+                  <tr
+                    key={order.id}
+                    className="recent-order-row opacity-0 translate-y-4 hover:bg-brand-surface-hover transition-colors"
+                  >
+                    <td className="px-6 py-4">
+                      <span className="font-mono text-sm text-brand-gold">{order.orderRef}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div>
+                        <p className="text-sm font-medium">{order.customer.name}</p>
+                        <p className="text-xs text-brand-muted flex items-center gap-1 mt-1">
+                          <Phone className="w-3 h-3" />
+                          {order.customer.phone}
+                        </p>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-sm">{order.items.length} item{order.items.length > 1 ? 's' : ''}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="font-medium text-brand-gold">{formatPrice(order.total)}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={cn('inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium', STATUS_CONFIG[order.status]?.class)}>
+                        {STATUS_CONFIG[order.status]?.icon}
+                        {STATUS_CONFIG[order.status]?.label}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-sm text-brand-muted">
+                        {order.createdAt.toLocaleDateString('en-LK', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <Link href={`/admin/orders?search=${order.orderRef}`} className="inline-flex p-1.5 rounded-lg text-brand-muted hover:text-brand-text hover:bg-brand-surface-hover transition-colors">
+                        <Eye className="w-4 h-4" />
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Floating Pending Orders Button */}
+      {stats.pendingOrders > 0 && (
+        <Link href="/admin/orders" className="fixed bottom-6 right-6 z-50 animate-bounce">
+          <div className="bg-brand-gold text-brand-bg px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:bg-brand-gold-hover transition-colors cursor-pointer group">
+            <div className="bg-brand-bg text-brand-gold rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              {stats.pendingOrders}
+            </div>
+            <span className="text-sm font-bold tracking-wide">PENDING ORDERS</span>
+            <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+          </div>
+        </Link>
+      )}
     </div>
   )
 }
+

@@ -7,6 +7,7 @@ import StorefrontLayout from '@/components/storefront/StorefrontLayout'
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import app from '@/lib/firebase'
 import { formatPrice } from '@/lib/utils'
+import { useCart } from '@/contexts/cart-context'
 
 interface CartItem {
   id: string
@@ -31,6 +32,7 @@ export default function CartPage() {
   const [user, setUser] = useState<User | null>(null)
   const [cartItems, setCartItems] = useState<EnrichedCartItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const { refreshCart } = useCart()
 
   useEffect(() => {
     const auth = getAuth(app)
@@ -69,12 +71,13 @@ export default function CartPage() {
     if (!user) return
     const token = await user.getIdToken()
     try {
-      const res = await fetch(`/api/cart?itemId=${itemId}`, {
+      const res = await fetch(`/api/cart?productId=${itemId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })
       if (res.ok) {
         setCartItems(prev => prev.filter(item => item.id !== itemId))
+        await refreshCart()
       }
     } catch (err) {
       console.error(err)

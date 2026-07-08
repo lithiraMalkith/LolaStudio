@@ -12,6 +12,7 @@ import app from '@/lib/firebase'
 import { ImageIcon } from 'lucide-react'
 import { formatPrice } from '@/lib/formatPrice'
 import { showToast } from '@/components/storefront/Toast'
+import { useCart } from '@/contexts/cart-context'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -45,6 +46,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [quantity, setQuantity] = useState(1)
   const [isAdding, setIsAdding] = useState(false)
   const [activeImageIdx, setActiveImageIdx] = useState(0)
+  const { refreshCart } = useCart()
 
   useEffect(() => {
     fetch(`/api/products/${productId}`)
@@ -167,6 +169,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
       const data = await res.json()
       if (data.success) {
+        await refreshCart()
         showToast('Added to cart')
       } else {
         showToast('Failed to add to cart', 'error')

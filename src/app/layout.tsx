@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { DM_Sans, Playfair_Display, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/contexts/auth-context'
+import { CartProvider } from '@/contexts/cart-context'
 import { Toaster } from 'react-hot-toast'
 
 const dmsans = DM_Sans({
@@ -60,8 +61,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-brand-bg text-brand-text antialiased font-sans">
         <AuthProvider>
-          {children}
-          <Toaster
+          <CartProvider>
+            {children}
+            <Toaster
             position="top-right"
             toastOptions={{
               duration: 4000,
@@ -80,6 +82,7 @@ export default function RootLayout({
               },
             }}
           />
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

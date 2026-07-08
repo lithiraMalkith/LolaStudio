@@ -12,6 +12,7 @@ import { formatPrice } from '@/lib/formatPrice'
 import { showToast } from '@/components/storefront/Toast'
 import { getAuth } from 'firebase/auth'
 import app from '@/lib/firebase'
+import { useCart } from '@/contexts/cart-context'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -34,6 +35,7 @@ function ShopContent() {
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [addingToCart, setAddingToCart] = useState<string | null>(null)
+  const { refreshCart } = useCart()
 
   // States for search, filter, sort, and pagination
   const [searchQuery, setSearchQuery] = useState('')
@@ -87,6 +89,7 @@ function ShopContent() {
       })
       const data = await res.json()
       if (data.success) {
+        await refreshCart()
         showToast('Added to cart')
       } else {
         showToast('Failed to add to cart', 'error')
@@ -119,6 +122,7 @@ function ShopContent() {
       })
       const data = await res.json()
       if (data.success) {
+        await refreshCart()
         router.push('/checkout')
       } else {
         showToast('Failed to add to cart', 'error')
@@ -230,7 +234,7 @@ function ShopContent() {
                   onClick={() => handleCategoryClick(null)}
                   className={`font-headline-md text-[13px] ${!selectedCategory ? 'text-primary border-l border-primary pl-4' : 'text-on-surface-variant pl-4 hover:text-on-surface hover:pl-5'} w-full text-left transition-all duration-500`}
                 >
-                  THE COLLECTION
+                  All CATEGORIES
                 </button>
               </li>
               <li>
