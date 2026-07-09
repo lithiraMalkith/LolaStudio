@@ -115,8 +115,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-md">
             <p className="font-caption text-[10px] text-on-surface-variant uppercase tracking-[0.15em] opacity-60">© 2026 LOLA STUDIO. HANDMADE IN SRI LANKA.</p>
             <div className="flex items-center gap-lg">
-              <a className="font-caption text-[10px] text-on-surface-variant hover:text-primary uppercase tracking-widest opacity-40 hover:opacity-100 transition-all duration-300" href="#">Terms</a>
-              <a className="font-caption text-[10px] text-on-surface-variant hover:text-primary uppercase tracking-widest opacity-40 hover:opacity-100 transition-all duration-300" href="#">Shipping</a>
+
               <button
                 onClick={scrollToTop}
                 className="w-9 h-9 border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all duration-500 ml-md"
