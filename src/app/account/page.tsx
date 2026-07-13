@@ -193,18 +193,18 @@ export default function AccountPage() {
 
         {/* Stats Row */}
         <section className="max-w-container-max mx-auto px-gutter mb-lg">
-            <div className="grid grid-cols-3 gap-md">
-            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-sm md:gap-md">
+            <div className="order-1 bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
               <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Total Orders</div>
-              <div className="font-headline-xl text-[28px] text-primary whitespace-nowrap">{orders.length.toString().padStart(2, '0')}</div>
+              <div className="font-headline-xl text-[24px] md:text-[28px] text-primary whitespace-nowrap">{orders.length.toString().padStart(2, '0')}</div>
             </div>
-            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
+            <div className="order-3 md:order-2 col-span-2 md:col-span-1 bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
               <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Total Spent</div>
-              <div className="font-headline-xl text-[28px] text-on-surface whitespace-nowrap">{formatPrice(totalSpent)}</div>
+              <div className="font-headline-xl text-[24px] md:text-[28px] text-on-surface whitespace-nowrap">{formatPrice(totalSpent)}</div>
             </div>
-            <div className="bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
+            <div className="order-2 md:order-3 bg-surface-container-low border border-outline-variant/30 p-md text-center group hover:border-primary/30 transition-all duration-500 min-h-[96px] flex flex-col items-center justify-center">
               <div className="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-xs opacity-60">Member Since</div>
-              <div className="font-headline-xl text-[20px] text-on-surface uppercase tracking-wider whitespace-nowrap">{memberSince}</div>
+              <div className="font-headline-xl text-[16px] md:text-[20px] text-on-surface uppercase tracking-wider whitespace-nowrap">{memberSince}</div>
             </div>
           </div>
         </section>
@@ -317,7 +317,7 @@ export default function AccountPage() {
                 <div className="mt-xl pt-md border-t border-outline-variant/30 flex gap-sm">
                   <button
                     onClick={handleSignOut}
-                    className="border border-primary/50 text-primary px-md py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary/10 transition-all w-full"
+                    className="border border-primary/50 bg-primary/10 text-primary px-md py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary/20 transition-all w-full"
                   >
                     Logout
                   </button>

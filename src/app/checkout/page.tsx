@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import app from '@/lib/firebase'
 import { formatPrice } from '@/lib/utils'
+import ToastProvider, { showToast } from '@/components/storefront/Toast'
 
 interface CartItem {
   id: string
@@ -102,7 +103,7 @@ export default function CheckoutPage() {
   const handleCompleteOrder = async () => {
     if (!user) return
     if (!shippingInfo.firstName || !shippingInfo.address || !shippingInfo.phone) {
-      alert("Please fill in required shipping fields.")
+      showToast("Please fill in required shipping fields.", 'error')
       return
     }
 
@@ -142,14 +143,16 @@ export default function CheckoutPage() {
 
       const data = await res.json()
       if (data.success) {
-        alert("Order placed successfully! Redirecting to account...")
-        router.push('/account')
+        showToast("Order placed successfully! Redirecting to account...", 'success')
+        setTimeout(() => {
+          router.push('/account')
+        }, 1500)
       } else {
-        alert("Failed to place order: " + data.error)
+        showToast("Failed to place order: " + data.error, 'error')
       }
     } catch (err) {
       console.error(err)
-      alert("An error occurred during checkout.")
+      showToast("An error occurred during checkout.", 'error')
     } finally {
       setIsSubmitting(false)
     }
@@ -345,6 +348,7 @@ export default function CheckoutPage() {
         </div>
         <p className="font-caption text-[12px] text-on-tertiary-container opacity-60">© 2026 LOLA STUDIO. HANDMADE IN SRI LANKA.</p>
       </footer>
+      <ToastProvider />
     </div>
   )
 }

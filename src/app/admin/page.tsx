@@ -321,11 +321,10 @@ export default function AdminDashboard() {
         {statCards.slice(0, 4).map((stat, i) => (
           <div
             key={i}
-            className={`stat-card bg-brand-surface rounded-xl border border-brand-border p-5 card-hover overflow-hidden relative ${
-              stat.value === 0 && stat.color.includes('danger')
+            className={`stat-card bg-brand-surface rounded-xl border border-brand-border p-5 card-hover overflow-hidden relative ${stat.value === 0 && stat.color.includes('danger')
                 ? 'low-stock-warning border-brand-danger/50'
                 : ''
-            }`}
+              }`}
           >
             <div className="relative z-10">
               <div className="flex items-start justify-between">
@@ -484,13 +483,12 @@ export default function AdminDashboard() {
                 className="activity-item flex items-start gap-3 py-3 px-3 rounded-lg hover:bg-brand-gold/5 transition-colors"
               >
                 <div
-                  className={`w-2 h-2 rounded-full mt-2 shrink-0 ${
-                    activity.type === 'order'
+                  className={`w-2 h-2 rounded-full mt-2 shrink-0 ${activity.type === 'order'
                       ? 'bg-brand-gold'
                       : activity.type === 'product'
                         ? 'bg-brand-success'
                         : 'bg-brand-info'
-                  }`}
+                    }`}
                 />
                 <div className="min-w-0 flex-1">
                   <p className="text-xs text-brand-text leading-relaxed">{activity.message}</p>
@@ -612,18 +610,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Floating Pending Orders Button */}
-      {stats.pendingOrders > 0 && (
-        <Link href="/admin/orders" className="fixed bottom-6 right-6 z-50 animate-bounce">
-          <div className="bg-brand-gold text-brand-bg px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:bg-brand-gold-hover transition-colors cursor-pointer group">
-            <div className="bg-brand-bg text-brand-gold rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-              {stats.pendingOrders}
-            </div>
-            <span className="text-sm font-bold tracking-wide">PENDING ORDERS</span>
-            <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-          </div>
-        </Link>
-      )}
+
     </div>
   )
 }

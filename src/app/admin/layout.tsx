@@ -23,6 +23,7 @@ import {
   MessageSquare,
 } from 'lucide-react'
 import type { Permission } from '@/lib/permissions'
+import AdminNotifications from './AdminNotifications'
 
 interface SidebarItem {
   label: string
@@ -205,6 +206,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Menu className="w-6 h-6" />
           </button>
           <div className="flex items-center gap-3 ml-auto">
+            <AdminNotifications />
             <div className="w-8 h-8 rounded-full bg-brand-gold/20 flex items-center justify-center">
               <span className="text-brand-gold text-sm font-medium">
                 {user.email?.[0]?.toUpperCase() || 'U'}
