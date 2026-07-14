@@ -25,6 +25,7 @@ interface Product {
   images: string[]
   category?: string
   slug: string
+  stockQty?: number
 }
 
 function ShopContent() {
@@ -313,7 +314,9 @@ function ShopContent() {
                 <div key={n} className="aspect-[4/5] bg-surface-container/50 animate-pulse"></div>
               ))
             ) : paginatedProducts.length > 0 ? (
-              paginatedProducts.map((product) => (
+              paginatedProducts.map((product) => {
+                const isSoldOut = product.stockQty === 0;
+                return (
                 <div key={product.id} className="product-card group relative bg-surface-container-lowest overflow-hidden transition-all duration-500">
                   <div className="aspect-[4/5] relative overflow-hidden bg-surface-container">
                     <img
@@ -321,6 +324,13 @@ function ShopContent() {
                       className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
                       src={(product as any).image || product.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"}
                     />
+                    
+                    {isSoldOut && (
+                      <div className="absolute top-sm right-sm bg-background/90 text-on-background px-md py-xs font-label-sm text-[10px] uppercase tracking-widest z-10 border border-outline-variant/30 shadow-sm">
+                        Sold Out
+                      </div>
+                    )}
+
                     <div className="overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-sm">
                       <Link href={`/shop/${product.id}`}>
                         <button className="border border-primary/50 text-primary px-lg py-sm font-label-sm text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500 min-w-[160px]">
@@ -329,17 +339,17 @@ function ShopContent() {
                       </Link>
                       <button
                         onClick={() => handleAddToCart(product.id)}
-                        disabled={addingToCart === product.id}
+                        disabled={addingToCart === product.id || isSoldOut}
                         className="border border-primary text-on-primary bg-primary px-lg py-sm font-label-sm text-[10px] uppercase tracking-widest hover:brightness-110 transition-all duration-500 disabled:opacity-50 min-w-[160px]"
                       >
-                        {addingToCart === product.id ? 'Adding...' : 'Add to Cart'}
+                        {addingToCart === product.id ? 'Adding...' : isSoldOut ? 'Out of Stock' : 'Add to Cart'}
                       </button>
                       <button
                         onClick={() => handleBuyNow(product.id)}
-                        disabled={addingToCart === product.id}
+                        disabled={addingToCart === product.id || isSoldOut}
                         className="border border-outline-variant/50 text-on-surface px-lg py-sm font-label-sm text-[10px] uppercase tracking-widest hover:border-primary hover:text-primary transition-all duration-500 disabled:opacity-50 min-w-[160px]"
                       >
-                        Buy Now
+                        {isSoldOut ? 'Sold Out' : 'Buy Now'}
                       </button>
                     </div>
                   </div>
@@ -353,7 +363,7 @@ function ShopContent() {
                     </div>
                   </div>
                 </div>
-              ))
+              )})
             ) : (
               <p className="col-span-full text-center text-on-surface-variant py-xl">No artifacts found.</p>
             )}

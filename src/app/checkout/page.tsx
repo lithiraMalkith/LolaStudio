@@ -7,6 +7,7 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import app from '@/lib/firebase'
 import { formatPrice } from '@/lib/utils'
 import ToastProvider, { showToast } from '@/components/storefront/Toast'
+import { useCart } from '@/contexts/cart-context'
 
 interface CartItem {
   id: string
@@ -25,6 +26,7 @@ interface EnrichedCartItem extends CartItem {
 
 export default function CheckoutPage() {
   const router = useRouter()
+  const { refreshCart } = useCart()
   const [user, setUser] = useState<User | null>(null)
   const [cartItems, setCartItems] = useState<EnrichedCartItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -143,9 +145,10 @@ export default function CheckoutPage() {
 
       const data = await res.json()
       if (data.success) {
-        showToast("Order placed successfully! Redirecting to account...", 'success')
+        await refreshCart()
+        showToast("Order placed successfully! Redirecting to summary...", 'success')
         setTimeout(() => {
-          router.push('/account')
+          router.push(`/order-success/${data.data.id}`)
         }, 1500)
       } else {
         showToast("Failed to place order: " + data.error, 'error')

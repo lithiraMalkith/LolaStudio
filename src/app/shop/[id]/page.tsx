@@ -31,6 +31,7 @@ interface Product {
   material?: string
   color?: string
   weight?: string
+  stockQty?: number
 }
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -305,14 +306,16 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   <div className="flex items-center gap-lg">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="text-on-surface hover:text-primary transition-colors material-symbols-outlined text-[18px]"
+                      disabled={product.stockQty === 0}
+                      className="text-on-surface hover:text-primary transition-colors material-symbols-outlined text-[18px] disabled:opacity-50"
                     >
                       remove
                     </button>
                     <span className="font-mono text-[14px]" id="qty">{quantity}</span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="text-on-surface hover:text-primary transition-colors material-symbols-outlined text-[18px]"
+                      disabled={product.stockQty === 0}
+                      className="text-on-surface hover:text-primary transition-colors material-symbols-outlined text-[18px] disabled:opacity-50"
                     >
                       add
                     </button>
@@ -320,10 +323,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </div>
                 <button
                   onClick={handleAddToCart}
-                  disabled={isAdding}
+                  disabled={isAdding || product.stockQty === 0}
                   className="w-full bg-primary text-on-primary font-bold py-md px-lg font-mono text-[13px] uppercase tracking-[0.2em] hover:brightness-110 transition-all duration-300 disabled:opacity-50"
                 >
-                  {isAdding ? 'ADDING...' : 'ADD TO CART'}
+                  {product.stockQty === 0 ? 'SOLD OUT' : isAdding ? 'ADDING...' : 'ADD TO CART'}
                 </button>
               </div>
 
@@ -355,7 +358,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
-              {relatedProducts.map((relatedProduct) => (
+              {relatedProducts.map((relatedProduct) => {
+                const isSoldOut = relatedProduct.stockQty === 0;
+                return (
                 <div key={relatedProduct.id} className="related-card group relative bg-surface-container-lowest overflow-hidden transition-all duration-500">
                   <div className="aspect-[4/5] relative overflow-hidden bg-surface-container">
                     <img
@@ -363,6 +368,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                       className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
                       src={(relatedProduct as any).image || relatedProduct.images?.[0] || "https://lh3.googleusercontent.com/aida-public/AB6AXuCiAIswvjrF9HTZmSMQy6JLDwQRGsF_my1U0hdV-thkItODTBZrnvDK2QJb6onKSmriycMN4WCUd53TZ29dhcjWZ1rkFRk2jXJzhvMGsROAm-LH_6F2nPAPQtsZV5LYseSeNBrVuOUewOPUQC_bHHH9no3sfaeOsNjCDdJ_HbwUCjzwAqbviah1YzhoxAg7q5UjH4O5JEa9s8pC5B0Mlhm7a8S52t289U5k6bEcjTuywzdbwIKqGbBITxRJ65YQfGrMyJovDcUpqFII"}
                     />
+                    {isSoldOut && (
+                      <div className="absolute top-sm right-sm bg-background/90 text-on-background px-md py-xs font-label-sm text-[10px] uppercase tracking-widest z-10 border border-outline-variant/30 shadow-sm pointer-events-none">
+                        Sold Out
+                      </div>
+                    )}
                     <div className="overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                       <Link href={`/shop/${relatedProduct.id}`}>
                         <button className="border border-primary/50 text-primary px-lg py-sm font-mono text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500">
@@ -376,7 +386,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     <p className="font-mono text-[10px] tracking-widest text-primary">{formatPrice(relatedProduct.price)}</p>
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           </section>
         )}

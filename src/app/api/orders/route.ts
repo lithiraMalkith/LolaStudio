@@ -301,11 +301,12 @@ export async function POST(req: NextRequest) {
 
       const docRef = await adminDb.collection('orders').add(orderData)
 
-      // Clear the user's cart
+      // Remove purchased items from the user's cart
       const cartRef = adminDb.collection('users').doc(authedReq.user.uid).collection('cart')
-      const cartItems = await cartRef.get()
       const batch = adminDb.batch()
-      cartItems.docs.forEach((doc) => batch.delete(doc.ref))
+      for (const item of orderItems) {
+        batch.delete(cartRef.doc(item.productId))
+      }
       await batch.commit()
 
       // Update or create customer record

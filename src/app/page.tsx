@@ -130,12 +130,19 @@ export default function HomePage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-lg" id="popular-grid">
               {popularProducts.length > 0 ? (
-                popularProducts.map((product) => (
+                popularProducts.map((product) => {
+                  const isSoldOut = product.stockQty === 0;
+                  return (
                   <div key={product.id} className="group flex flex-col gap-base">
                     <div className="aspect-[3/4] bg-surface-container overflow-hidden relative border border-outline-variant/10">
                       <Link href={`/shop/${product.id}`}>
                         <img className="w-full h-full object-cover filter grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src={product.images?.[0] || ''} alt={product.name} />
                       </Link>
+                      {isSoldOut && (
+                        <div className="absolute top-sm right-sm bg-background/90 text-on-background px-md py-xs font-label-sm text-[10px] uppercase tracking-widest z-10 border border-outline-variant/30 shadow-sm pointer-events-none">
+                          Sold Out
+                        </div>
+                      )}
                     </div>
                     <div className="flex justify-between items-center">
                       <div>
@@ -145,7 +152,7 @@ export default function HomePage() {
                       <Link href={`/shop/${product.id}`} className="font-label-sm text-[10px] text-primary uppercase tracking-widest border-b border-primary/30 pb-[2px] hover:border-primary">View Details</Link>
                     </div>
                   </div>
-                ))
+                )})
               ) : (
                 <div className="md:col-span-3 text-center text-on-surface-variant text-[13px] h-[300px] flex items-center justify-center">
                   <span className="opacity-50">Curating our most loved artifacts...</span>
